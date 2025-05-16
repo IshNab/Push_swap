@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 13:04:37 by inabakka          #+#    #+#             */
+/*   Updated: 2025/05/16 13:15:44 by inabakka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
@@ -20,21 +32,33 @@ typedef	struct s_stack_node
 }	t_stack_node;
 
 // Stack initialization and validation
-int     stack_init(t_stack_node **a, char **argv, bool is_split);
-bool    check_duplicates(t_stack_node *stack);
-bool    check_input(char *str);
-void    free_stack(t_stack_node **stack);
-void    free_split(char **split);
+int		stack_init(t_stack_node **a, char **argv, bool is_split);
+bool	check_duplicates(t_stack_node *stack);
+bool	check_input(char *str);
+void	free_stack(t_stack_node **stack);
+void	free_split(char **split);
 
 // Stack utilities
-t_stack_node    *get_stack_bottom(t_stack_node *stack);
-t_stack_node    *get_stack_before_bottom(t_stack_node *stack);
-void    append_node(t_stack_node **stack, int n);
+t_stack_node	*get_stack_bottom(t_stack_node *stack);
+t_stack_node	*get_stack_before_bottom(t_stack_node *stack);
+void			append_node(t_stack_node **stack, int n);
 
 // Algorithm
-void    sort_five(t_stack_node **a, t_stack_node **b);
+void	small_sort(t_stack_node **a);
+void	sort_five(t_stack_node **a, t_stack_node **b);
+void	push_swap(t_stack_node **a, t_stack_node **b);
+
+//helper function
+char	**ft_split(char const *s, char c);
+int		stack_len(t_stack_node *stack);
+bool	stack_sorted(t_stack_node *stack);
+
+//operations
+void	sa(t_stack_node **a, bool print);
+void	sb(t_stack_node **b, bool print);
+void	ss(t_stack_node **a, t_stack_node **b);
 
 // Error handling
-void    error_exit(t_stack_node **a, t_stack_node **b, char **split, bool is_split);
+void	error_exit(t_stack_node **a, t_stack_node **b, char **split, bool is_split);
 
 #endif

@@ -1,29 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 13:03:56 by inabakka          #+#    #+#             */
+/*   Updated: 2025/05/16 13:13:10 by inabakka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 // Helper functions
 int stack_len(t_stack_node *stack)
 {
-    int len = 0;
-    while (stack)
-    {
-        len++;
-        stack = stack->next;
-    }
-    return len;
+	int	len = 0;
+	while (stack)
+	{
+		len++;
+		stack = stack->next;
+	}
+	return len;
 }
 
 bool stack_sorted(t_stack_node *stack)
 {
-    if (!stack)
-        return true;
-    
-    while (stack->next)
-    {
-        if (stack->value > stack->next->value)
-            return false;
-        stack = stack->next;
-    }
-    return true;
+	if (!stack)
+		return true;
+	while (stack->next)
+	{
+		if (stack->value > stack->next->value)
+			return false;
+		stack = stack->next;
+	}
+	return true;
 }
 
 // Main sorting algorithm
