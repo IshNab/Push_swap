@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:37 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/16 13:15:44 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:20:05 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ bool	check_duplicates(t_stack_node *stack);
 bool	check_input(char *str);
 void	free_stack(t_stack_node **stack);
 void	free_split(char **split);
+static long	ft_atol(const char *str);
 
 // Stack utilities
 t_stack_node	*get_stack_bottom(t_stack_node *stack);

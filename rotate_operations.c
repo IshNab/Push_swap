@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotate_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inabakka <inabakka@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:43 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/16 13:04:45 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:50:14 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 void ra(t_stack_node **a, bool print)
 {
-    if (!*a || !(*a)->next)
+	if (!*a || !(*a)->next)
         return;
         
-    t_stack_node *first = *a;
-    t_stack_node *last = *a;
-    
-    while (last->next)
+	t_stack_node *first = *a;
+	t_stack_node *last = *a;
+		
+	while (last->next)
         last = last->next;
-    
-    *a = first->next;
-    (*a)->prev = NULL;
-    first->next = NULL;
-    first->prev = last;
-    last->next = first;
-    
-    if (print)
+		
+	*a = first->next;
+	(*a)->prev = NULL;
+	first->next = NULL;
+	first->prev = last;
+	last->next = first;
+		
+	if (print)
         write(1, "ra\n", 3);
 }
 
