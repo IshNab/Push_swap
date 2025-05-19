@@ -3,49 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   push_operations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inabakka <inabakka@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:28 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/16 13:04:30 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/19 20:32:42 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void pa(t_stack_node **a, t_stack_node **b)
+void	pa(t_stack_node **a, t_stack_node **b)
 {
-    if (!*b)
-        return;
-        
-    t_stack_node *push_node = *b;
-    *b = (*b)->next;
-    if (*b)
-        (*b)->prev = NULL;
-    
-    push_node->next = *a;
-    if (*a)
-        (*a)->prev = push_node;
-    *a = push_node;
-    push_node->prev = NULL;
-    
-    write(1, "pa\n", 3);
+	if (!*b)
+		return ;
+	t_stack_node	*push_node = *b;
+	*b = (*b)->next;
+	if (*b)
+		(*b)->prev = NULL;
+	push_node->next = *a;
+	if (*a)
+		(*a)->prev = push_node;
+	*a = push_node;
+	push_node->prev = NULL;
+	write(1, "pa\n", 3);
 }
 
-void pb(t_stack_node **a, t_stack_node **b)
+void	pb(t_stack_node **a, t_stack_node **b)
 {
-    if (!*a)
-        return;
-        
-    t_stack_node *push_node = *a;
-    *a = (*a)->next;
-    if (*a)
-        (*a)->prev = NULL;
-    
-    push_node->next = *b;
-    if (*b)
-        (*b)->prev = push_node;
-    *b = push_node;
-    push_node->prev = NULL;
-    
-    write(1, "pb\n", 3);
+	t_stack_node	*push_node = *a;
+
+	if (!*a)
+		return ;
+	*a = (*a)->next;
+	if (*a)
+		(*a)->prev = NULL;
+	push_node->next = *b;
+	if (*b)
+		(*b)->prev = push_node;
+	*b = push_node;
+	push_node->prev = NULL;
+	write(1, "pb\n", 3);
 }

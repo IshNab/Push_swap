@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inabakka <inabakka@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:49 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/16 13:03:51 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/19 20:25:51 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "libft.h"
 
 static int	word_count(const char *str, char c);
 static int	word_len(const char *str, char c);

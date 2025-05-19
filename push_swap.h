@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:37 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/16 13:20:05 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/19 20:30:41 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	check_duplicates(t_stack_node *stack);
 bool	check_input(char *str);
 void	free_stack(t_stack_node **stack);
 void	free_split(char **split);
-static long	ft_atol(const char *str);
+long	ft_atol(const char *str);
 
 // Stack utilities
 t_stack_node	*get_stack_bottom(t_stack_node *stack);
@@ -58,6 +58,14 @@ bool	stack_sorted(t_stack_node *stack);
 void	sa(t_stack_node **a, bool print);
 void	sb(t_stack_node **b, bool print);
 void	ss(t_stack_node **a, t_stack_node **b);
+void	pa(t_stack_node **a, t_stack_node **b);
+void	pb(t_stack_node **a, t_stack_node **b);
+void	ra(t_stack_node **a, bool print);
+void	rb(t_stack_node **b, bool print);
+void	rr(t_stack_node **a, t_stack_node **b);
+void	rra(t_stack_node **a, bool print);
+void	rrb(t_stack_node **b, bool print);
+void	rrr(t_stack_node **a, t_stack_node **b);
 
 // Error handling
 void	error_exit(t_stack_node **a, t_stack_node **b, char **split, bool is_split);

@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:56 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/16 13:49:11 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/19 20:28:04 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,37 @@
 // Helper functions
 int	stack_len(t_stack_node *stack)
 {
-	int	len = 0;
+	int	len;
+
+	len = 0;
 	while (stack)
 	{
 		len++;
 		stack = stack->next;
 	}
-	return len;
+	return (len);
 }
 
 bool	stack_sorted(t_stack_node *stack)
 {
 	if (!stack)
-		return true;
+		return (true);
 	while (stack->next)
 	{
 		if (stack->value > stack->next->value)
-			return false;
+			return (false);
 		stack = stack->next;
 	}
-	return true;
+	return (true);
 }
 
 // Main sorting algorithm
 void	push_swap(t_stack_node **a, t_stack_node **b)
 {
-	int	len = stack_len(*a);
+	int	len;
 	int	median;
+
+	len = stack_len(*a);
 	t_stack_node *current = *a;
 
 	// Find median

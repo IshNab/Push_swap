@@ -6,13 +6,13 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:09 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/16 14:08:19 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/19 19:56:12 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static long	ft_atol(const char *str)
+long	ft_atol(const char *str)
 {
 	long	result;
 	int		sign;
