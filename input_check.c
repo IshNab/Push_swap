@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:09 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 14:40:53 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/23 17:11:52 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ bool	check_duplicates(t_stack_node *stack)
 	return (false);
 }
 
-void	error_exit(t_stack_node **a, t_stack_node **b, char **split, bool is_split)
+void	error_exit(t_stack_node **a, t_stack_node **b,
+	char **split, bool is_split)
 {
 	if (is_split && split)
 		free_split(split);

@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:28 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 14:42:43 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/23 17:11:13 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	pa(t_stack_node **a, t_stack_node **b)
 {
+	t_stack_node	*push_node;
+
+	push_node = *b;
 	if (!*b)
 		return ;
-	t_stack_node	*push_node = *b;
-
 	*b = (*b)->next;
 	if (*b)
 		(*b)->prev = NULL;
@@ -31,8 +32,9 @@ void	pa(t_stack_node **a, t_stack_node **b)
 
 void	pb(t_stack_node **a, t_stack_node **b)
 {
-	t_stack_node	*push_node = *a;
+	t_stack_node	*push_node;
 
+	push_node = *a;
 	if (!*a)
 		return ;
 	*a = (*a)->next;

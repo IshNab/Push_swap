@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:05:14 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 16:57:23 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/23 17:11:31 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	sa(t_stack_node **a, bool print)
 	second = first->next;
 	if (!*a || !(*a)->next)
 		return ;
-	first->next = second->next; 	// Update prev/next pointers
+	first->next = second->next;// Update prev/next pointers
 	if (second->next)
 		second->next->prev = first;
 	second->next = first;
