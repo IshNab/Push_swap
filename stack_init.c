@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:05:08 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/16 13:41:00 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:02:34 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	free_stack(t_stack_node **stack)
 {
-	t_stack_node *tmp;
+	t_stack_node	*tmp;
 
 	if (!stack || !*stack)
-		return;
+		return ;
 	while (*stack)
 	{
 		tmp = (*stack)->next;
@@ -29,32 +29,32 @@ void	free_stack(t_stack_node **stack)
 
 void	free_split(char **split)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (split[i])
 	{
 		free(split[i]);
-			i++;
+		i++;
 	}
 	free(split);
 }
 
 void	append_node(t_stack_node **stack, int n)
 {
-	t_stack_node *node;
-	t_stack_node *last;
+	t_stack_node	*node;
+	t_stack_node	*last;
 
 	node = malloc(sizeof(t_stack_node));
 	if (!node)
-		return;
+		return ;
 	node->value = n;
 	node->next = NULL;
 	node->prev = NULL;
 	if (!*stack)
 	{
 		*stack = node;
-		return;
+		return ;
 	}
 	last = *stack;
 	while (last->next)
@@ -66,7 +66,7 @@ void	append_node(t_stack_node **stack, int n)
 int	stack_init(t_stack_node **a, char **argv, bool is_split)
 {
 	long	n;
-	int	i;
+	int		i;
 
 	i = 0;
 	while (argv[i])

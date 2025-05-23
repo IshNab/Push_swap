@@ -6,13 +6,13 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:17 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/16 13:48:08 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/23 13:53:05 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_stack_node	*a;
 	t_stack_node	*b;
@@ -31,8 +31,6 @@ int main(int argc, char **argv)
 			sa(&a, true);
 		else if (stack_len(a) == 3)
 			small_sort(&a);
-		// else if (stack_len(a) <= 5)
-		// 	sort_five(&a, &b);
 		else
 			push_swap(&a, &b);
 	}

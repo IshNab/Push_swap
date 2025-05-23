@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:28 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/19 20:32:42 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:42:43 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	pa(t_stack_node **a, t_stack_node **b)
 	if (!*b)
 		return ;
 	t_stack_node	*push_node = *b;
+
 	*b = (*b)->next;
 	if (*b)
 		(*b)->prev = NULL;

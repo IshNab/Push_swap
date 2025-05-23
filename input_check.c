@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:09 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/19 19:56:12 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:40:53 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ bool	check_duplicates(t_stack_node *stack)
 {
 	t_stack_node	*current;
 	t_stack_node	*check;
+
 	current = stack;
 	while (current)
 	{

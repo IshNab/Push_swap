@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:37 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/19 20:30:41 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:53:44 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@
 # include <stdbool.h>
 # include <unistd.h>
 
-typedef	struct s_stack_node
+typedef struct s_stack_node
 {
-	int		value;
-	int		current_position;
-	int		final_index;
-	int		push_cost;
-	bool	above_middle;
-	bool	cheapest;
-	struct	s_stack_node *target_node;
-	struct	s_stack_node *next;
-	struct	s_stack_node *prev;
+	int					value;
+	int					current_position;
+	int					final_index;
+	int					push_cost;
+	bool				above_middle;
+	bool				cheapest;
+	struct s_stack_node	*target_node;
+	struct s_stack_node	*next;
+	struct s_stack_node	*prev;
 }	t_stack_node;
 
 // Stack initialization and validation
@@ -43,6 +43,11 @@ long	ft_atol(const char *str);
 t_stack_node	*get_stack_bottom(t_stack_node *stack);
 t_stack_node	*get_stack_before_bottom(t_stack_node *stack);
 void			append_node(t_stack_node **stack, int n);
+int				stack_len(t_stack_node *stack);
+bool			stack_sorted(t_stack_node *stack);
+int				find_median(t_stack_node *stack);
+t_stack_node		*find_max_node(t_stack_node *stack);
+void			rotate_to_top(t_stack_node **b, t_stack_node *max_node);
 
 // Algorithm
 void	small_sort(t_stack_node **a);
@@ -51,8 +56,6 @@ void	push_swap(t_stack_node **a, t_stack_node **b);
 
 //helper function
 char	**ft_split(char const *s, char c);
-int		stack_len(t_stack_node *stack);
-bool	stack_sorted(t_stack_node *stack);
 
 //operations
 void	sa(t_stack_node **a, bool print);

@@ -6,19 +6,21 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:05:02 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/16 13:59:13 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:21:23 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// Helper function for sorting 3 elements
-void 	small_sort(t_stack_node **a)
+void	small_sort(t_stack_node **a)
 {
-	int first = (*a)->value;
-	int second = (*a)->next->value;
-	int third = (*a)->next->next->value;
+	int	first;
+	int	second;
+	int	third;
 
+	first = (*a)->value;
+	second = (*a)->next->value;
+	third = (*a)->next->next->value;
 	if (first > second && second < third && first < third)
 		sa(a, true);
 	else if (first > second && second > third)
