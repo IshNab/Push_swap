@@ -23,24 +23,20 @@ LIBFT_LIB = includes/libft.a
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT_LIB) -lm -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 run: $(NAME)
-	$(CC) $(CFLAGS) -o main main.c $(NAME)
-	./main
-
-push_swap: $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT_LIB) -lm -o push_swap
+	./$(NAME)
 
 clean:
 	rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME) main push_swap
+	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re run
