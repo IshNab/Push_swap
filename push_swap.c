@@ -45,11 +45,11 @@ static void	push_to_b(t_stack_node **a, t_stack_node **b, int median)
 static void	push_back_to_a(t_stack_node **a, t_stack_node **b)
 {
 	t_stack_node	*max_node;
-	int				len;
+//	int				len;
 
 	while (*b)
 	{
-		len = stack_len(*b);
+	//	len = stack_len(*b);
 		max_node = find_max_node(*b);
 		if (max_node->value == (*b)->value)
 			pa(a, b);
