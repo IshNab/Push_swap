@@ -24,7 +24,7 @@ int	stack_len(t_stack_node *stack)
 	}
 	return (len);
 }
-
+//bubble sort algorithm
 static void	sort_array(int *arr, int len)
 {
 	int	i;
@@ -68,8 +68,8 @@ int	find_median(t_stack_node *stack)
 		arr[i++] = current->value;
 		current = current->next;
 	}
-	sort_array(arr, len);
-	median = arr[len / 2];
+	sort_array(arr, len);	//sort array first 
+	median = arr[len / 2];	//find median value of the sorted array
 	free(arr);
 	return (median);
 }
