@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:56 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 16:55:17 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:45:34 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@ bool	stack_sorted(t_stack_node *stack)
 
 static void	push_to_b(t_stack_node **a, t_stack_node **b, int median)
 {
+	int	len;
+	int	i;
+
+	len = stack_len(*a);
+	i = 0;
+	while (i < len && stack_len(*a) > 3)
+	{
+		if ((*a)->value < median)
+			pb(a, b);
+		else
+			ra(a, true);
+		i++;
+	}
 	while (stack_len(*a) > 3)
 	{
 		if ((*a)->value < median)
@@ -39,12 +52,26 @@ static void	push_to_b(t_stack_node **a, t_stack_node **b, int median)
 static void	push_back_to_a(t_stack_node **a, t_stack_node **b)
 {
 	t_stack_node	*max_node;
+	int				len;
 
 	while (*b)
 	{
+		len = stack_len(*b);
 		max_node = find_max_node(*b);
-		rotate_to_top(b, max_node);
-		pa(a, b);
+		if (max_node->value == (*b)->value)
+			pa(a, b);
+		else if (max_node->value == (*b)->next->value)
+		{
+			sb(b, true);
+			pa(a, b);
+		}
+		else
+		{
+			if (max_node->value > (*b)->value)
+				rb(b, true);
+			else
+				rrb(b, true);
+		}
 	}
 }
 
@@ -52,6 +79,11 @@ void	push_swap(t_stack_node **a, t_stack_node **b)
 {
 	int	median;
 
+	if (stack_len(*a) <= 3)
+	{
+		small_sort(a);
+		return ;
+	}
 	median = find_median(*a);
 	push_to_b(a, b, median);
 	small_sort(a);
