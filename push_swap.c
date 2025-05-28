@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:56 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/28 13:45:34 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:50:40 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,6 @@ static void	push_to_b(t_stack_node **a, t_stack_node **b, int median)
 		else
 			ra(a, true);
 		i++;
-	}
-	while (stack_len(*a) > 3)
-	{
-		if ((*a)->value < median)
-			pb(a, b);
-		else
-			ra(a, true);
 	}
 }
 
