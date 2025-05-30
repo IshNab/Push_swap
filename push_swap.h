@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:37 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 17:08:51 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:34:04 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	sort_five(t_stack_node **a, t_stack_node **b);
 void	push_swap(t_stack_node **a, t_stack_node **b);
 
 // Helper function
-char	**ft_split(char const *s, char c);
+char	**ft_split(char *str, char c);
 
 // Operations
 void	sa(t_stack_node **a, bool print);

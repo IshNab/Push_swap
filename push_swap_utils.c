@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:52:36 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 16:55:21 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/30 12:55:10 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	stack_len(t_stack_node *stack)
 	}
 	return (len);
 }
-//bubble sort algorithm
+
 static void	sort_array(int *arr, int len)
 {
 	int	i;
@@ -68,8 +68,8 @@ int	find_median(t_stack_node *stack)
 		arr[i++] = current->value;
 		current = current->next;
 	}
-	sort_array(arr, len);	//sort array first 
-	median = arr[len / 2];	//find median value of the sorted array
+	sort_array(arr, len);
+	median = arr[len / 2];
 	free(arr);
 	return (median);
 }

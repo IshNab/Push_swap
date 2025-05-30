@@ -6,79 +6,51 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:56 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/28 15:03:46 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:16:10 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-bool	stack_sorted(t_stack_node *stack)
+void push_swap(t_stack_node **a, t_stack_node **b)
 {
-	if (!stack)
-		return (true);
-	while (stack->next)
-	{
-		if (stack->value > stack->next->value)
-			return (false);
-		stack = stack->next;
-	}
-	return (true);
-}
-
-static void	push_to_b(t_stack_node **a, t_stack_node **b, int median)
-{
-	int	len;
-	int	i;
-
-	len = stack_len(*a);
-	i = 0;
-	while (i < len && stack_len(*a) > 3)
-	{
-		if ((*a)->value < median)
-			pb(a, b);
-		else
-			ra(a, true);
-		i++;
-	}
-}
-
-static void	push_back_to_a(t_stack_node **a, t_stack_node **b)
-{
-	t_stack_node	*max_node;
-//	int				len;
-
-	while (*b)
-	{
-	//	len = stack_len(*b);
-		max_node = find_max_node(*b);
-		if (max_node->value == (*b)->value)
-			pa(a, b);
-		else if (max_node->value == (*b)->next->value)
-		{
-			sb(b, true);
-			pa(a, b);
-		}
-		else
-		{
-			if (max_node->value > (*b)->value)
-				rb(b, true);
-			else
-				rrb(b, true);
-		}
-	}
-}
-
-void	push_swap(t_stack_node **a, t_stack_node **b)
-{
-	int	median;
-
-	if (stack_len(*a) <= 3)
+	int i = 0;
+	if (stack_sorted(*a))
+		return;
+	if (stack_len(*a) <= 5)
 	{
 		small_sort(a);
-		return ;
+		return;
 	}
-	median = find_median(*a);
-	push_to_b(a, b, median);
+	// 2. Push chunks to B (multi-median partitioning)
+	int chunks = 4; // Adjust based on stack size
+	while (i < chunks)
+	{
+		int min = /* min of current chunk */;
+		int max = /* max of current chunk */;
+		push_chunk_to_b(a, b, min, max);
+		i++;
+	}
+	// 3. Sort A (now only largest elements remain)
 	small_sort(a);
-	push_back_to_a(a, b);
+
+    // 4. Push back from B (already in descending order)
+	while (*b)
+		pa(a, b);
+}
+
+// Push a chunk of A (between min/max) to B, keeping B sorted in reverse
+void push_chunk_to_b(t_stack_node **a, t_stack_node **b, int min, int max) {
+	int i = 0;
+	int len = stack_len(*a);
+	while (i < len && stack_len(*a) > 3) {
+		if ((*a)->value >= min && (*a)->value <= max) {
+			pb(a, b);
+			if (*b && (*b)->next && (*b)->value < (*b)->next->value)
+				sb(b); // Keep B in descending order
+		} else {
+			ra(a);
+		}
+		i++;
+	}
 }
