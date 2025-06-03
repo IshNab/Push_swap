@@ -75,5 +75,7 @@ void	rrr(t_stack_node **a, t_stack_node **b);
 // Error handling
 void	error_exit(t_stack_node **a, t_stack_node **b,
 			char **split, bool is_split);
-
+int	*stack_to_sorted_array(t_stack_node *stack, int len);
+int	find_max(t_stack_node *stack);
+int	find_position(t_stack_node *stack, int value);
 #endif

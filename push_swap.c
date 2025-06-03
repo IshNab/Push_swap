@@ -25,60 +25,79 @@ bool	stack_sorted(t_stack_node *stack)
 	return (true);
 }
 
-static void	push_to_b(t_stack_node **a, t_stack_node **b, int median)
-{
-	int	len;
-	int	i;
-
-	len = stack_len(*a);
-	i = 0;
-	while (i < len && stack_len(*a) > 3)
-	{
-		if ((*a)->value < median)
-			pb(a, b);
-		else
-			ra(a, true);
-		i++;
-	}
-}
-
-static void	push_back_to_a(t_stack_node **a, t_stack_node **b)
-{
-	t_stack_node	*max_node;
-//	int				len;
-
-	while (*b)
-	{
-	//	len = stack_len(*b);
-		max_node = find_max_node(*b);
-		if (max_node->value == (*b)->value)
-			pa(a, b);
-		else if (max_node->value == (*b)->next->value)
-		{
-			sb(b, true);
-			pa(a, b);
-		}
-		else
-		{
-			if (max_node->value > (*b)->value)
-				rb(b, true);
-			else
-				rrb(b, true);
-		}
-	}
-}
-
 void	push_swap(t_stack_node **a, t_stack_node **b)
 {
-	int	median;
+    int	len = stack_len(*a);
 
-	if (stack_len(*a) <= 3)
-	{
-		small_sort(a);
-		return ;
-	}
-	median = find_median(*a);
-	push_to_b(a, b, median);
-	small_sort(a);
-	push_back_to_a(a, b);
+    if (len <= 3)
+    {
+        small_sort(a);
+        return;
+    }
+
+    int chunk_count = len > 100 ? 11 : 5;
+    int chunk_size = len / chunk_count;
+    int *sorted = stack_to_sorted_array(*a, len);
+
+    for (int chunk = 0; chunk < chunk_count; chunk++)
+    {
+        int lower = chunk * chunk_size;
+        int upper = (chunk == chunk_count - 1) ? len : (chunk + 1) * chunk_size;
+        int pushed = 0;
+        int to_push = upper - lower;
+
+        // Keep looping until all values in this chunk are pushed
+        while (pushed < to_push)
+        {
+            int idx = 0;
+            t_stack_node *tmp = *a;
+            // Find if any value in this chunk exists in stack a
+            int found = 0;
+            while (tmp)
+            {
+                int value = tmp->value;
+                idx = 0;
+                while (idx < len && value != sorted[idx])
+                    idx++;
+                if (idx >= lower && idx < upper)
+                {
+                    found = 1;
+                    break;
+                }
+                tmp = tmp->next;
+            }
+            if (!found)
+                break; // No more values in this chunk
+
+            // If the top of a is in the chunk, push it
+            int value = (*a)->value;
+            idx = 0;
+            while (idx < len && value != sorted[idx])
+                idx++;
+            if (idx >= lower && idx < upper)
+            {
+                pb(a, b);
+                pushed++;
+            }
+            else
+                ra(a, true);
+        }
+    }
+    free(sorted);
+
+    small_sort(a);
+
+    // Push back from b to a in descending order
+    while (*b)
+    {
+        int max = find_max(*b);
+        int pos = find_position(*b, max);
+        if (pos <= stack_len(*b) / 2)
+            while ((*b)->value != max)
+                rb(b, true);
+        else
+            while ((*b)->value != max)
+                rrb(b, true);
+        pa(a, b);
+    }
 }
