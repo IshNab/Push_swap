@@ -6,13 +6,13 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:05:02 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 16:21:23 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:16:43 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	small_sort(t_stack_node **a)
+void	sort_three(t_stack_node **a)
 {
 	int	first;
 	int	second;
@@ -37,4 +37,30 @@ void	small_sort(t_stack_node **a)
 	}
 	else if (first < second && second > third && first > third)
 		rra(a, true);
+}
+
+void	sort_four_or_five(t_stack_node **a, t_stack_node **b)
+{
+	int	min;
+
+	// Push 1-2 smallest elements to B
+	while (stack_len(*a) > 3)
+	{
+		min = find_min(*a);
+		if ((*a)->value == min)
+			pb(a, b);
+		else
+			ra(a, true);
+	}
+
+	// Sort remaining 3 elements in A
+	sort_three(a);
+
+	// Push back from B to A (in order)
+	while (*b)
+		pa(a, b);
+
+	// Final rotate to order A (if needed)
+	if (!stack_sorted(*a))
+		ra(a, true);
 }

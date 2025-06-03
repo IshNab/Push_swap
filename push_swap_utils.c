@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:52:36 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 16:55:21 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/30 12:55:10 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	stack_len(t_stack_node *stack)
 	return (len);
 }
 
+<<<<<<< HEAD
 // Returns a sorted array of the stack's values
 int	*stack_to_sorted_array(t_stack_node *stack, int len)
 {
@@ -110,6 +111,8 @@ static void	quick_sort(int *arr, int low, int high)
 }
 
 // Replace bubble sort with quick sort in sort_array
+=======
+>>>>>>> c083e4b6398d73946c3483f7b79f62f5497a26e8
 static void	sort_array(int *arr, int len)
 {
     quick_sort(arr, 0, len - 1);
@@ -134,8 +137,8 @@ int	find_median(t_stack_node *stack)
 		arr[i++] = current->value;
 		current = current->next;
 	}
-	sort_array(arr, len);	//sort array first 
-	median = arr[len / 2];	//find median value of the sorted array
+	sort_array(arr, len);
+	median = arr[len / 2];
 	free(arr);
 	return (median);
 }
