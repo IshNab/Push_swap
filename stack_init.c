@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	free_stack(t_stack_node **stack)
+void	free_stack(t_stack **stack)
 {
 	t_stack_node	*tmp;
 
@@ -40,12 +40,12 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	append_node(t_stack_node **stack, int n)
+void	append_node(t_stack **stack, int n)
 {
-	t_stack_node	*node;
-	t_stack_node	*last;
+	t_stack	*node;
+	t_stack	*last;
 
-	node = malloc(sizeof(t_stack_node));
+	node = malloc(sizeof(t_stack));
 	if (!node)
 		return ;
 	node->value = n;
@@ -63,7 +63,7 @@ void	append_node(t_stack_node **stack, int n)
 	node->prev = last;
 }
 
-int	stack_init(t_stack_node **a, char **argv, bool is_split)
+int	stack_init(t_stack **a, char **argv, bool is_split)
 {
 	long	n;
 	int		i;

@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void sa(t_stack *a, bool print)
+void    sa(t_stack **a, bool print)
 {
     if (!a || !a->top || !a->top->next)
         return;
@@ -36,7 +36,7 @@ void sa(t_stack *a, bool print)
         write(1, "sa\n", 3);
 }
 
-void sb(t_stack *b, bool print)
+void sb(t_stack **b, bool print)
 {
     if (!b || !b->top || !b->top->next)
         return;
@@ -60,7 +60,7 @@ void sb(t_stack *b, bool print)
         write(1, "sb\n", 3);
 }
 
-void ss(t_stack *a, t_stack *b)
+void ss(t_stack **a, t_stack **b)
 {
     sa(a, false);
     sb(b, false);

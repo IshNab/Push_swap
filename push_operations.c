@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void pa(t_stack *a, t_stack *b)
+void    pa(t_stack **a, t_stack **b)
 {
     t_node *push_node;
     
@@ -35,7 +35,7 @@ void pa(t_stack *a, t_stack *b)
     write(1, "pa\n", 3);
 }
 
-void pb(t_stack *a, t_stack *b)
+void    pb(t_stack **a, t_stack **b)
 {
     t_node *push_node;
     

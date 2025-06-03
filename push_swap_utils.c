@@ -27,15 +27,15 @@ int	stack_len(t_stack_node *stack)
 }
 
 // Helper function to check if stack is sorted
-int is_sorted(t_stack *a)
+bool	is_sorted(t_stack_node *stack)
 {
-    t_node *current = a->top;
-    
-    while (current && current->next)
-    {
-        if (current->value > current->next->value)
-            return 0;
-        current = current->next;
-    }
-    return 1;
+	if (!stack)
+		return (true);
+	while (stack->next)
+	{
+		if (stack->value > stack->next->value)
+			return (false);
+		stack = stack->next;
+	}
+	return (true);
 }

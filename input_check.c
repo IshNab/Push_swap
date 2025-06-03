@@ -53,27 +53,30 @@ bool	check_input(char *str)
 	return (true);
 }
 
-bool	check_duplicates(t_stack_node *stack)
+bool check_duplicates(t_stack *stack)
 {
-	t_stack_node	*current;
-	t_stack_node	*check;
+    t_node *current;
+    t_node *check;
 
-	current = stack;
-	while (current)
-	{
-		check = current->next;
-		while (check)
-		{
-			if (current->value == check->value)
-				return (true);
-			check = check->next;
-		}
-		current = current->next;
-	}
-	return (false);
+    if (!stack || !stack->top)
+        return false;  // Empty stack has no duplicates
+
+    current = stack->top;
+    while (current)
+    {
+        check = current->next;
+        while (check)
+        {
+            if (current->value == check->value)
+                return true;
+            check = check->next;
+        }
+        current = current->next;
+    }
+    return false;
 }
 
-void	error_exit(t_stack_node **a, t_stack_node **b,
+void	error_exit(t_stack **a, t_stack **b,
 	char **split, bool is_split)
 {
 	if (is_split && split)

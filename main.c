@@ -14,8 +14,8 @@
 
 int	main(int argc, char **argv)
 {
-	t_stack_node	*a;
-	t_stack_node	*b;
+	t_stack	*a;
+	t_stack	*b;
 
 	a = NULL;
 	b = NULL;
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 		argv = ft_split(argv[1], ' ');
 	if (!stack_init(&a, argv + 1, argc == 2))
 		return (1);
-	if (!stack_sorted(a))
+	if (!is_sorted(a))
 	{
 		if (stack_len(a) == 2)
 			sa(&a, true);
