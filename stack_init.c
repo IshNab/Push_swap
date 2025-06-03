@@ -12,19 +12,23 @@
 
 #include "push_swap.h"
 
-void	free_stack(t_stack **stack)
+void free_stack(t_stack **stack)
 {
-	t_stack_node	*tmp;
-
-	if (!stack || !*stack)
-		return ;
-	while (*stack)
-	{
-		tmp = (*stack)->next;
-		free(*stack);
-		*stack = tmp;
-	}
-	*stack = NULL;
+    if (!stack || !*stack)
+        return;
+    
+    t_node *current = (*stack)->top;
+    t_node *tmp;
+    
+    while (current)
+    {
+        tmp = current->next;
+        free(current);
+        current = tmp;
+    }
+    
+    free(*stack);
+    *stack = NULL;
 }
 
 void	free_split(char **split)
@@ -40,27 +44,46 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	append_node(t_stack **stack, int n)
+void append_node(t_stack **stack, int n)
 {
-	t_stack	*node;
-	t_stack	*last;
-
-	node = malloc(sizeof(t_stack));
-	if (!node)
-		return ;
-	node->value = n;
-	node->next = NULL;
-	node->prev = NULL;
-	if (!*stack)
-	{
-		*stack = node;
-		return ;
-	}
-	last = *stack;
-	while (last->next)
-		last = last->next;
-	last->next = node;
-	node->prev = last;
+    if (!stack)
+        return;
+    
+    t_node *node = malloc(sizeof(t_node));
+    if (!node)
+        return; // or handle error
+    
+    node->value = n;
+    node->next = NULL;
+    node->prev = NULL;
+    
+    if (!*stack)
+    {
+        *stack = malloc(sizeof(t_stack));
+        if (!*stack)
+        {
+            free(node);
+            return; // or handle error
+        }
+        (*stack)->top = node;
+        (*stack)->size = 1;
+        return;
+    }
+    
+    if (!(*stack)->top)
+    {
+        (*stack)->top = node;
+        (*stack)->size = 1;
+        return;
+    }
+    
+    t_node *last = (*stack)->top;
+    while (last->next)
+        last = last->next;
+    
+    last->next = node;
+    node->prev = last;
+    (*stack)->size++;
 }
 
 int	stack_init(t_stack **a, char **argv, bool is_split)

@@ -57,6 +57,11 @@ void    free_stack(t_stack **stack);
 void    append_node(t_stack **stack, int n);
 void    sort_three(t_stack **a);
 void    sort_five(t_stack **a, t_stack **b);
+void	error_exit(t_stack **a, t_stack **b,
+	char **split, bool is_split);
 char    **ft_split(char *str, char c);
+long	ft_atol(const char *str);
+bool	check_input(char *str);
+bool    check_duplicates(t_stack *stack);
 
 #endif

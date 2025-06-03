@@ -13,7 +13,7 @@
 #include "push_swap.h"
 
 // Sort stack with 3 elements
-void sort_three(t_stack *a)
+void sort_three(t_stack **a)
 {
     int first;
     int second;
@@ -42,7 +42,7 @@ void sort_three(t_stack *a)
 }
 
 // Sort stack with 5 elements
-void sort_five(t_stack *a, t_stack *b)
+void sort_five(t_stack **a, t_stack **b)
 {
     int pushed = 0;
     // Push 2 smallest elements to stack B
@@ -59,7 +59,7 @@ void sort_five(t_stack *a, t_stack *b)
     }
     
     // Sort remaining 3 elements in stack A
-    sort_three(a);
+    sort_three(&a);
     
     // Push elements back from stack B
     while (b->size > 0)
