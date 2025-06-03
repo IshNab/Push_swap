@@ -12,107 +12,39 @@
 
 #include "push_swap.h"
 
-void ra(t_stack_node **a, bool print)
+void ra(t_stack *a, bool print)
 {
-	if (!*a || !(*a)->next)
+    if (!a || !a->top || !a->top->next)
         return;
         
-	t_stack_node *first = *a;
-	t_stack_node *last = *a;
-		
-	while (last->next)
-        last = last->next;
-		
-	*a = first->next;
-	(*a)->prev = NULL;
-	first->next = NULL;
-	first->prev = last;
-	last->next = first;
-		
-	if (print)
-        write(1, "ra\n", 3);
-}
-
-void rb(t_stack_node **b, bool print)
-{
-    if (!*b || !(*b)->next)
-        return;
-        
-    t_stack_node *first = *b;
-    t_stack_node *last = *b;
+    t_node *first = a->top;
+    t_node *last = a->top;
     
     while (last->next)
         last = last->next;
     
-    *b = first->next;
-    (*b)->prev = NULL;
+    a->top = first->next;
+    a->top->prev = NULL;
     first->next = NULL;
     first->prev = last;
     last->next = first;
     
     if (print)
-        write(1, "rb\n", 3);
+        write(1, "ra\n", 3);
 }
 
-void rr(t_stack_node **a, t_stack_node **b)
+void rb(t_stack *b, bool print)
 {
-    ra(a, false);
-    rb(b, false);
-    write(1, "rr\n", 3);
-}
-
-void rra(t_stack_node **a, bool print)
-{
-    if (!*a || !(*a)->next)
+    if (!b || !b->top || !b->top->next)
         return;
         
-    t_stack_node *last = *a;
-    t_stack_node *second_last = NULL;
+    t_node *first = b->top;
+    t_node *last = b->top;
     
     while (last->next)
-    {
-        second_last = last;
         last = last->next;
-    }
     
-    last->next = *a;
-    (*a)->prev = last;
-    last->prev = NULL;
-    second_last->next = NULL;
-    *a = last;
-    
-    if (print)
-        write(1, "rra\n", 4);
-}
-
-void rrb(t_stack_node **b, bool print)
-{
-    if (!*b || !(*b)->next)
-        return;
-        
-    t_stack_node *last = *b;
-    t_stack_node *second_last = NULL;
-    
-    while (last->next)
-    {
-        second_last = last;
-        last = last->next;
-    }
-    
-    last->next = *b;
-    (*b)->prev = last;
-    last->prev = NULL;
-    second_last->next = NULL;
-    *b = last;
-    
-    if (print)
-        write(1, "rrb\n", 4);
-}
-
-void rrr(t_stack_node **a, t_stack_node **b)
-{
-    rra(a, false);
-    rrb(b, false);
-    write(1, "rrr\n", 4);
-}
-
+    b->top = first->next;
+    b->top->prev = NULL;
+    first->next = NULL;
+   

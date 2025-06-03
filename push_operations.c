@@ -12,38 +12,48 @@
 
 #include "push_swap.h"
 
-void	pa(t_stack_node **a, t_stack_node **b)
+void pa(t_stack *a, t_stack *b)
 {
-	t_stack_node	*push_node;
-
-	push_node = *b;
-	if (!*b)
-		return ;
-	*b = (*b)->next;
-	if (*b)
-		(*b)->prev = NULL;
-	push_node->next = *a;
-	if (*a)
-		(*a)->prev = push_node;
-	*a = push_node;
-	push_node->prev = NULL;
-	write(1, "pa\n", 3);
+    t_node *push_node;
+    
+    if (!b || !b->top)
+        return;
+    
+    push_node = b->top;
+    b->top = b->top->next;
+    if (b->top)
+        b->top->prev = NULL;
+    
+    push_node->next = a->top;
+    if (a->top)
+        a->top->prev = push_node;
+    a->top = push_node;
+    push_node->prev = NULL;
+    
+    a->size++;
+    b->size--;
+    write(1, "pa\n", 3);
 }
 
-void	pb(t_stack_node **a, t_stack_node **b)
+void pb(t_stack *a, t_stack *b)
 {
-	t_stack_node	*push_node;
-
-	push_node = *a;
-	if (!*a)
-		return ;
-	*a = (*a)->next;
-	if (*a)
-		(*a)->prev = NULL;
-	push_node->next = *b;
-	if (*b)
-		(*b)->prev = push_node;
-	*b = push_node;
-	push_node->prev = NULL;
-	write(1, "pb\n", 3);
+    t_node *push_node;
+    
+    if (!a || !a->top)
+        return;
+    
+    push_node = a->top;
+    a->top = a->top->next;
+    if (a->top)
+        a->top->prev = NULL;
+    
+    push_node->next = b->top;
+    if (b->top)
+        b->top->prev = push_node;
+    b->top = push_node;
+    push_node->prev = NULL;
+    
+    b->size++;
+    a->size--;
+    write(1, "pb\n", 3);
 }

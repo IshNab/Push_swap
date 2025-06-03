@@ -12,49 +12,57 @@
 
 #include "push_swap.h"
 
-void	sa(t_stack_node **a, bool print)
+void sa(t_stack *a, bool print)
 {
-	t_stack_node	*first;
-	t_stack_node	*second;
-
-	first = *a;
-	second = first->next;
-	if (!*a || !(*a)->next)
-		return ;
-	first->next = second->next;// Update prev/next pointers
-	if (second->next)
-		second->next->prev = first;
-	second->next = first;
-	second->prev = NULL;
-	first->prev = second;
-	*a = second;
-	if (print)
-		write(1, "sa\n", 3);
+    if (!a || !a->top || !a->top->next)
+        return;
+        
+    t_node *first = a->top;
+    t_node *second = first->next;
+    
+    // Update pointers
+    first->next = second->next;
+    if (second->next)
+        second->next->prev = first;
+    
+    second->next = first;
+    second->prev = NULL;
+    first->prev = second;
+    
+    // Update stack top
+    a->top = second;
+    
+    if (print)
+        write(1, "sa\n", 3);
 }
 
-void	sb(t_stack_node **b, bool print)
+void sb(t_stack *b, bool print)
 {
-	t_stack_node	*first;
-	t_stack_node	*second;
-
-	first = *b;
-	second = first->next;
-	first->next = second->next;
-	if (!*b || !(*b)->next)
-		return ;
-	if (second->next)
-		second->next->prev = first;
-	second->next = first;
-	second->prev = NULL;
-	first->prev = second;
-	*b = second;
-	if (print)
-		write(1, "sb\n", 3);
+    if (!b || !b->top || !b->top->next)
+        return;
+        
+    t_node *first = b->top;
+    t_node *second = first->next;
+    
+    // Update pointers
+    first->next = second->next;
+    if (second->next)
+        second->next->prev = first;
+    
+    second->next = first;
+    second->prev = NULL;
+    first->prev = second;
+    
+    // Update stack top
+    b->top = second;
+    
+    if (print)
+        write(1, "sb\n", 3);
 }
 
-void	ss(t_stack_node **a, t_stack_node **b)
+void ss(t_stack *a, t_stack *b)
 {
-	sa(a, false);
-	sb(b, false);
-	write(1, "ss\n", 3);
+    sa(a, false);
+    sb(b, false);
+    write(1, "ss\n", 3);
 }

@@ -12,123 +12,127 @@
 
 #include "push_swap.h"
 
-void push_swap(t_stack_node **a, t_stack_node **b)
+// Main sorting function
+void push_swap(t_stack *a, t_stack *b)
 {
-	int i = 0;
-	if (stack_sorted(*a))
-		return;
-	if (stack_len(*a) <= 5)
-	{
-		small_sort(a);
-		return;
-	}
-	// 2. Push chunks to B (multi-median partitioning)
-	int chunks = 4; // Adjust based on stack size
-	while (i < chunks)
-	{
-		int min = /* min of current chunk */;
-		int max = /* max of current chunk */;
-		push_chunk_to_b(a, b, min, max);
-		i++;
-	}
-	// 3. Sort A (now only largest elements remain)
-	small_sort(a);
-
-    // 4. Push back from B (already in descending order)
-	while (*b)
-		pa(a, b);
+    if (is_sorted(a))
+        return;
+    
+    int size = a->size;
+    
+    if (size <= 3)
+        sort_three(a);
+    else if (size <= 5)
+        sort_five(a, b);
+    else
+    {
+        // Determine optimal chunk size based on input size
+        int chunk_size = (size <= 100) ? 15 : 30;
+        
+        // Phase 1: Push elements to stack B in chunks
+        push_chunks_to_b(a, b, chunk_size);
+        
+        // Phase 2: Sort and push back to stack A
+        sort_and_push_back(a, b);
+    }
 }
 
-<<<<<<< HEAD
-void	push_swap(t_stack_node **a, t_stack_node **b)
+// Push elements to stack B in chunks
+void push_chunks_to_b(t_stack *a, t_stack *b, int chunk_size)
 {
-    int	len = stack_len(*a);
-
-    if (len <= 3)
+    int min;
+    int max;
+    int pushed;
+    int chunk_count = 0;
+    int total_chunks = (a->size / chunk_size) + 1;
+    
+    while (chunk_count < total_chunks && a->size > 3)
     {
-        small_sort(a);
-        return;
-    }
-
-    int chunk_count = len > 100 ? 11 : 5;
-    int chunk_size = len / chunk_count;
-    int *sorted = stack_to_sorted_array(*a, len);
-
-    for (int chunk = 0; chunk < chunk_count; chunk++)
-    {
-        int lower = chunk * chunk_size;
-        int upper = (chunk == chunk_count - 1) ? len : (chunk + 1) * chunk_size;
-        int pushed = 0;
-        int to_push = upper - lower;
-
-        // Keep looping until all values in this chunk are pushed
-        while (pushed < to_push)
+        min = get_min(a);
+        max = get_max(a);
+        int chunk_min = min + (chunk_count * chunk_size);
+        int chunk_max = chunk_min + chunk_size;
+        if (chunk_max > max)
+            chunk_max = max;
+        
+        pushed = 0;
+        while (pushed < chunk_size && a->size > 3)
         {
-            int idx = 0;
-            t_stack_node *tmp = *a;
-            // Find if any value in this chunk exists in stack a
-            int found = 0;
-            while (tmp)
-            {
-                int value = tmp->value;
-                idx = 0;
-                while (idx < len && value != sorted[idx])
-                    idx++;
-                if (idx >= lower && idx < upper)
-                {
-                    found = 1;
-                    break;
-                }
-                tmp = tmp->next;
-            }
-            if (!found)
-                break; // No more values in this chunk
-
-            // If the top of a is in the chunk, push it
-            int value = (*a)->value;
-            idx = 0;
-            while (idx < len && value != sorted[idx])
-                idx++;
-            if (idx >= lower && idx < upper)
+            int current = a->top->value;
+            if (current >= chunk_min && current <= chunk_max)
             {
                 pb(a, b);
                 pushed++;
+                // Rotate to keep larger numbers at bottom of B
+                if (b->size > 1 && current < chunk_min + (chunk_size / 2))
+                    rb(b);
             }
             else
-                ra(a, true);
+                ra(a);
         }
+        chunk_count++;
     }
-    free(sorted);
+}
 
-    small_sort(a);
-
-    // Push back from b to a in descending order
-    while (*b)
+// Sort stack B and push elements back to stack A
+void sort_and_push_back(t_stack *a, t_stack *b)
+{
+    while (b->size > 0)
     {
-        int max = find_max(*b);
-        int pos = find_position(*b, max);
-        if (pos <= stack_len(*b) / 2)
-            while ((*b)->value != max)
-                rb(b, true);
+        int max = get_max(b);
+        int position = 0;
+        t_node *current = b->top;
+        
+        // Find position of max value in stack B
+        while (current && current->value != max)
+        {
+            position++;
+            current = current->next;
+        }
+        
+        // Rotate stack B to bring max to top
+        if (position <= b->size / 2)
+        {
+            while (b->top->value != max)
+                rb(b);
+        }
         else
-            while ((*b)->value != max)
-                rrb(b, true);
+        {
+            while (b->top->value != max)
+                rrb(b);
+        }
+        
+        // Push max back to stack A
         pa(a, b);
     }
-=======
-// Push a chunk of A (between min/max) to B, keeping B sorted in reverse
-void push_chunk_to_b(t_stack_node **a, t_stack_node **b, int min, int max) {
-	int i = 0;
-	int len = stack_len(*a);
-	while (i < len && stack_len(*a) > 3) {
-		if ((*a)->value >= min && (*a)->value <= max) {
-			pb(a, b);
-			if (*b && (*b)->next && (*b)->value < (*b)->next->value)
-				sb(b); // Keep B in descending order
-		} else {
-			ra(a);
-		}
-		i++;
-	}
->>>>>>> c083e4b6398d73946c3483f7b79f62f5497a26e8
+}
+
+// Helper function to get minimum value in stack
+int get_min(t_stack *s)
+{
+    t_node *current = s->top;
+    int min = INT_MAX;
+
+    while (current)
+    {
+        if (current->value < min)
+            min = current->value;
+        current = current->next;
+    }
+    return min;
+}
+
+// Helper function to get maximum value in stack
+int get_max(t_stack *s)
+{
+    t_node *current = s->top;
+    int max = INT_MIN;
+    
+    while (current)
+    {
+        if (current->value > max)
+            max = current->value;
+        current = current->next;
+    }
+    return max;
 }

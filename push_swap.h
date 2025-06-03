@@ -18,64 +18,39 @@
 # include <stdbool.h>
 # include <unistd.h>
 
-typedef struct s_stack_node
-{
-	int					value;
-	int					current_position;
-	int					final_index;
-	int					push_cost;
-	bool				above_middle;
-	bool				cheapest;
-	struct s_stack_node	*target_node;
-	struct s_stack_node	*next;
-	struct s_stack_node	*prev;
-}	t_stack_node;
+typedef struct s_node {
+    int value;
+    struct s_node *next;
+    struct s_node *prev;
+} t_node;
 
-// Stack initialization and validation
-int		stack_init(t_stack_node **a, char **argv, bool is_split);
-bool	check_duplicates(t_stack_node *stack);
-bool	check_input(char *str);
-void	free_stack(t_stack_node **stack);
-void	free_split(char **split);
-long	ft_atol(const char *str);
+typedef struct s_stack {
+    t_node *top;
+    int size;
+} t_stack;
 
-// Stack utilities
-t_stack_node	*get_stack_bottom(t_stack_node *stack);
-t_stack_node	*get_stack_before_bottom(t_stack_node *stack);
-t_stack_node	*find_max_node(t_stack_node *stack);
+// Stack operations
+void    pa(t_stack *a, t_stack *b);
+void    pb(t_stack *a, t_stack *b);
+void    sa(t_stack *a, bool print);
+void	sb(t_stack *b, bool print);
+void    ss(t_stack *a, t_stack *b);
+void    ra(t_stack *a, bool print);
+void    rb(t_stack_node *b, bool print);
+void    rr(t_stack *a, t_stack *b);
+void    rra(t_stack_node *a, bool print);
+void    rrb(t_stack_node *b, bool print);
+void    rrr(t_stack *a, t_stack *b);
 
-// more stack utilities
-void	append_node(t_stack_node **stack, int n);
-int		stack_len(t_stack_node *stack);
-int		find_median(t_stack_node *stack);
-bool	stack_sorted(t_stack_node *stack);
-void	rotate_to_top(t_stack_node **b, t_stack_node *max_node);
+// Helper functions
+void init_stack(t_stack *stack, int argc, char **argv);
+int is_sorted(t_stack *a);
+int get_min(t_stack *s);
+int get_max(t_stack *s);
+int get_median(t_stack *s, int size);
+void sort_three(t_stack *a);
+void sort_five(t_stack *a, t_stack *b);
+void push_chunks_to_b(t_stack *a, t_stack *b, int chunk_size);
+void sort_and_push_back(t_stack *a, t_stack *b);
 
-// Algorithm
-void	small_sort(t_stack_node **a);
-void	sort_five(t_stack_node **a, t_stack_node **b);
-void	push_swap(t_stack_node **a, t_stack_node **b);
-
-// Helper function
-char	**ft_split(char *str, char c);
-
-// Operations
-void	sa(t_stack_node **a, bool print);
-void	sb(t_stack_node **b, bool print);
-void	ss(t_stack_node **a, t_stack_node **b);
-void	pa(t_stack_node **a, t_stack_node **b);
-void	pb(t_stack_node **a, t_stack_node **b);
-void	ra(t_stack_node **a, bool print);
-void	rb(t_stack_node **b, bool print);
-void	rr(t_stack_node **a, t_stack_node **b);
-void	rra(t_stack_node **a, bool print);
-void	rrb(t_stack_node **b, bool print);
-void	rrr(t_stack_node **a, t_stack_node **b);
-
-// Error handling
-void	error_exit(t_stack_node **a, t_stack_node **b,
-			char **split, bool is_split);
-int	*stack_to_sorted_array(t_stack_node *stack, int len);
-int	find_max(t_stack_node *stack);
-int	find_position(t_stack_node *stack, int value);
 #endif
