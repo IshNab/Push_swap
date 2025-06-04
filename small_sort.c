@@ -12,12 +12,8 @@
 
 #include "push_swap.h"
 
-<<<<<<< HEAD
 // Sort stack with 3 elements
 void sort_three(t_stack **a)
-=======
-void	small_sort(t_stack_node **a)
->>>>>>> parent of c083e4b (update)
 {
     int first = (*a)->top->value;
     int second = (*a)->top->next->value;
@@ -40,7 +36,6 @@ void	small_sort(t_stack_node **a)
     else if (first < second && second > third && first > third)
         rra(a, true);
 }
-<<<<<<< HEAD
 
 // Sort stack with 5 elements
 void sort_five(t_stack **a, t_stack **b)
@@ -66,5 +61,3 @@ void sort_five(t_stack **a, t_stack **b)
     while ((*b)->size > 0)
         pa(a, b);
 }
-=======
->>>>>>> parent of c083e4b (update)

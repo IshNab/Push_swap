@@ -68,12 +68,12 @@ bool check_duplicates(t_stack *stack)
         while (check)
         {
             if (current->value == check->value)
-                return true;
+                return (true);
             check = check->next;
         }
         current = current->next;
     }
-    return false;
+    return (false);
 }
 
 void	error_exit(t_stack **a, t_stack **b,

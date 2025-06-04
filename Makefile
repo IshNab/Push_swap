@@ -18,13 +18,13 @@ OBJS = $(SRCS:.c=.o)
 
 INCLUDES = -Iincludes
 
-LIBFT_LIB = includes/libft.a
+#LIBFT_LIB = includes/libft.a
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT_LIB) -lm -o $@
-
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS)  -lm -o $@
+#$(LIBFT_LIB)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
