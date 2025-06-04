@@ -6,7 +6,7 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:17 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/30 17:16:56 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/23 13:53:05 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 		if (stack_len(a) == 2)
 			sa(&a, true);
 		else if (stack_len(a) == 3)
-			sort_three(&a);
+			small_sort(&a);
 		else
 			push_swap(&a, &b);
 	}

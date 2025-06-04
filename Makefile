@@ -1,7 +1,7 @@
 NAME = push_swap
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I.
+CFLAGS = -Wall -Wextra -Werror -I. -Iincludes
 
 SRCS = main.c \
 		input_check.c \
@@ -16,10 +16,14 @@ SRCS = main.c \
 
 OBJS = $(SRCS:.c=.o)
 
+INCLUDES = -Iincludes
+
+LIBFT_LIB = includes/libft.a
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -lm -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT_LIB) -lm -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

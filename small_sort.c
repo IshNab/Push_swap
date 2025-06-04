@@ -6,14 +6,18 @@
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:05:02 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/30 17:16:43 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:21:23 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+<<<<<<< HEAD
 // Sort stack with 3 elements
 void sort_three(t_stack **a)
+=======
+void	small_sort(t_stack_node **a)
+>>>>>>> parent of c083e4b (update)
 {
     int first = (*a)->top->value;
     int second = (*a)->top->next->value;
@@ -36,6 +40,7 @@ void sort_three(t_stack **a)
     else if (first < second && second > third && first > third)
         rra(a, true);
 }
+<<<<<<< HEAD
 
 // Sort stack with 5 elements
 void sort_five(t_stack **a, t_stack **b)
@@ -61,3 +66,5 @@ void sort_five(t_stack **a, t_stack **b)
     while ((*b)->size > 0)
         pa(a, b);
 }
+=======
+>>>>>>> parent of c083e4b (update)
