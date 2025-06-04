@@ -15,30 +15,26 @@
 // Sort stack with 3 elements
 void sort_three(t_stack **a)
 {
-    int first;
-    int second;
-    int third;
+    int first = (*a)->top->value;
+    int second = (*a)->top->next->value;
+    int third = (*a)->top->next->next->value;
 
-	first = a->top->value;
-	second = a->top->next->value;
-	third = a->top->next->next->value;
-    
     if (first > second && second < third && first < third)
-        sa(a);
+        sa(a, true);
     else if (first > second && second > third)
     {
-        sa(a);
-        rra(a);
+        sa(a, true);
+        rra(a, true);
     }
     else if (first > second && second < third && first > third)
-        ra(a);
+        ra(a, true);
     else if (first < second && second > third && first < third)
     {
-        sa(a);
-        ra(a);
+        sa(a, true);
+        ra(a, true);
     }
     else if (first < second && second > third && first > third)
-        rra(a);
+        rra(a, true);
 }
 
 // Sort stack with 5 elements
@@ -48,20 +44,20 @@ void sort_five(t_stack **a, t_stack **b)
     // Push 2 smallest elements to stack B
     while (pushed < 2)
     {
-        int min = get_min(a);
-        if (a->top->value == min)
+        int min = get_min(*a);
+        if ((*a)->top->value == min)
         {
             pb(a, b);
             pushed++;
         }
         else
-            ra(a);
+            ra(a, true);
     }
-    
+
     // Sort remaining 3 elements in stack A
-    sort_three(&a);
-    
+    sort_three(a);
+
     // Push elements back from stack B
-    while (b->size > 0)
+    while ((*b)->size > 0)
         pa(a, b);
 }

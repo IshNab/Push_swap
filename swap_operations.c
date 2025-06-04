@@ -14,10 +14,10 @@
 
 void    sa(t_stack **a, bool print)
 {
-    if (!a || !a->top || !a->top->next)
+    if (!a || !(*a)->top || !(*a)->top->next)
         return;
         
-    t_node *first = a->top;
+    t_node *first = (*a)->top;
     t_node *second = first->next;
     
     // Update pointers
@@ -30,7 +30,7 @@ void    sa(t_stack **a, bool print)
     first->prev = second;
     
     // Update stack top
-    a->top = second;
+    (*a)->top = second;
     
     if (print)
         write(1, "sa\n", 3);
@@ -38,10 +38,10 @@ void    sa(t_stack **a, bool print)
 
 void sb(t_stack **b, bool print)
 {
-    if (!b || !b->top || !b->top->next)
+    if (!b || !(*b)->top || !(*b)->top->next)
         return;
         
-    t_node *first = b->top;
+    t_node *first = (*b)->top;
     t_node *second = first->next;
     
     // Update pointers
@@ -54,7 +54,7 @@ void sb(t_stack **b, bool print)
     first->prev = second;
     
     // Update stack top
-    b->top = second;
+    (*b)->top = second;
     
     if (print)
         write(1, "sb\n", 3);

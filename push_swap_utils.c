@@ -13,7 +13,7 @@
 #include "push_swap.h"
 #include <stdlib.h>
 
-int	stack_len(t_stack_node *stack)
+int	stack_len(t_stack *stack)
 {
 	int	len;
 
@@ -27,7 +27,7 @@ int	stack_len(t_stack_node *stack)
 }
 
 // Helper function to check if stack is sorted
-bool	is_sorted(t_stack_node *stack)
+bool	is_sorted(t_stack *stack)
 {
 	if (!stack)
 		return (true);

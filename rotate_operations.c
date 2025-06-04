@@ -14,21 +14,23 @@
 
 void ra(t_stack **a, bool print)
 {
-    if (!a || !a->top || !a->top->next)
+    if (!a || !(*a) || !(*a)->top || !(*a)->top->next)
         return;
-        
-    t_node *first = a->top;
-    t_node *last = a->top;
-    
+
+    t_node *first = (*a)->top;
+    t_node *last = (*a)->top;
+
+    // Find the last node
     while (last->next)
         last = last->next;
-    
-    a->top = first->next;
-    a->top->prev = NULL;
-    first->next = NULL;
-    first->prev = last;
+
+    // Move top to bottom
+    (*a)->top = first->next;
+    (*a)->top->prev = NULL;
     last->next = first;
-    
+    first->prev = last;
+    first->next = NULL;
+
     if (print)
         write(1, "ra\n", 3);
 }
@@ -36,7 +38,7 @@ void ra(t_stack **a, bool print)
 /* Rotate stack B - shift all elements up by 1 (first becomes last) */
 void rb(t_stack **b, bool print)
 {
-    if (!b || !*b || !(*b)->top || !(*b)->top->next)
+    if (!b || !(*b) || !(*b)->top || !(*b)->top->next)
         return;
     
     t_node *first = (*b)->top;
@@ -60,7 +62,7 @@ void rb(t_stack **b, bool print)
 /* Rotate both stacks A and B */
 void rr(t_stack **a, t_stack **b)
 {
-    if (!a || !b || !*a || !*b)
+    if (!a || !b || !(*a) || !(*b))
         return;
     
     // Rotate both stacks without printing
@@ -73,7 +75,7 @@ void rr(t_stack **a, t_stack **b)
 /* Reverse rotate stack A - shift all elements down by 1 (last becomes first) */
 void rra(t_stack **a, bool print)
 {
-    if (!a || !*a || !(*a)->top || !(*a)->top->next)
+    if (!a || !(*a) || !(*a)->top || !(*a)->top->next)
         return;
     
     t_node *last = (*a)->top;
@@ -99,7 +101,7 @@ void rra(t_stack **a, bool print)
 /* Reverse rotate stack B */
 void rrb(t_stack **b, bool print)
 {
-    if (!b || !*b || !(*b)->top || !(*b)->top->next)
+    if (!b || !(*b) || !(*b)->top || !(*b)->top->next)
         return;
     
     t_node *last = (*b)->top;
@@ -125,7 +127,7 @@ void rrb(t_stack **b, bool print)
 /* Reverse rotate both stacks A and B */
 void rrr(t_stack **a, t_stack **b)
 {
-    if (!a || !b || !*a || !*b)
+    if (!a || !b || !(*a) || !(*b))
         return;
     
     // Reverse rotate both stacks without printing
@@ -133,4 +135,4 @@ void rrr(t_stack **a, t_stack **b)
     rrb(b, false);
     
     write(1, "rrr\n", 4);
-}  
+}
