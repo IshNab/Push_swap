@@ -37,10 +37,15 @@ void sort_three(t_stack **a)
         rra(a, true);
 }
 
-// Sort stack with 5 elements
 void sort_five(t_stack **a, t_stack **b)
 {
     int pushed = 0;
+    int rotations = 0;
+    int stack_size = stack_len(*a);
+
+    if (stack_size != 5)
+        return; // Only works for exactly 5 elements
+
     // Push 2 smallest elements to stack B
     while (pushed < 2)
     {
@@ -49,15 +54,22 @@ void sort_five(t_stack **a, t_stack **b)
         {
             pb(a, b);
             pushed++;
+            rotations = 0; // Reset rotation counter after successful push
         }
         else
+        {
             ra(a, true);
+            rotations++;
+            // Prevent infinite loop: if rotated full cycle without finding min
+            if (rotations >= stack_size)
+                break;
+        }
     }
 
     // Sort remaining 3 elements in stack A
     sort_three(a);
 
-    // Push elements back from stack B
-    while ((*b)->size > 0)
+    // Push back elements from stack B
+    while (*b && (*b)->size > 0)
         pa(a, b);
 }
