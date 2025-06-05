@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdlib.h>
 
 int stack_len(t_stack *stack)
 {

@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H
 
 # include <stdlib.h>
+# include <stddef.h>
 # include <limits.h>
 # include <stdbool.h>
 # include <unistd.h>
@@ -46,7 +47,7 @@ void    rrr(t_stack **a, t_stack **b);
 // Helper functions
 int     stack_init(t_stack **a, char **argv, bool is_split);
 int     stack_len(t_stack *stack);
-int     is_sorted(t_stack *a);
+bool	stack_sorted(t_stack *stack);
 int     get_min(t_stack *s);
 int     get_max(t_stack *s);
 int     get_median(t_stack *s, int size);
@@ -64,9 +65,9 @@ bool	check_input(char *str);
 bool    check_duplicates(t_stack *stack);
 char	*ft_substr(char const *string, unsigned int start, size_t len);
 
-//includes
+//push_swap_utils_2.c
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *src);
-size_t	ft_strlen(const char *str);
+int     ft_strlen(const char *str);
 
 #endif

@@ -18,7 +18,7 @@ void sort_and_push_back(t_stack **a, t_stack **b);
 // Main sorting function
 void push_swap(t_stack **a, t_stack **b)
 {
-    if (is_sorted(*a)) // expects t_stack *, so pass *a
+    if (stack_sorted(*a)) // expects t_stack *, so pass *a
         return;
     
     int size = (*a)->size; // a is t_stack **, so use (*a)->size

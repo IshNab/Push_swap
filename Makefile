@@ -12,7 +12,8 @@ SRCS = main.c \
 		swap_operations.c \
 		rotate_operations.c \
 		push_operations.c \
-		push_swap_utils.c
+		push_swap_utils.c \
+		push_swap_utils_2.c
 
 OBJS = $(SRCS:.c=.o)
 
