@@ -11,19 +11,12 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdlib.h>
 
-int	stack_len(t_stack *stack)
+int stack_len(t_stack *stack)
 {
-	int	len;
-
-	len = 0;
-	while (stack)
-	{
-		len++;
-		stack = stack->next;
-	}
-	return (len);
+    if (!stack)
+		return 0;
+    return stack->size;  // O(1) access
 }
 
 static void	sort_array(int *arr, int len)
@@ -50,40 +43,68 @@ static void	sort_array(int *arr, int len)
 	}
 }
 
-int	find_median(t_stack_node *stack)
+int find_median(t_stack *stack)
 {
-	int				len;
-	int				*arr;
-	int				i;
-	int				median;
-	t_stack_node	*current;
+    int *arr;
+    int i, median;
+    t_node *current;
 
-	len = stack_len(stack);
-	arr = malloc(sizeof(int) * len);
-	if (!arr)
-		return (0);
-	current = stack;
-	i = 0;
-	while (current)
-	{
-		arr[i++] = current->value;
-		current = current->next;
-	}
-	sort_array(arr, len);
-	median = arr[len / 2];
-	free(arr);
-	return (median);
+    if (!stack || !stack->top)
+		return 0;
+    arr = malloc(sizeof(int) * stack->size);
+    if (!arr)
+		return 0;
+    current = stack->top;
+    i = 0;
+    while (current) {
+        arr[i++] = current->value;  // Access via node
+        current = current->next;    // Node's next pointer
+    }
+    sort_array(arr, stack->size);
+    median = arr[stack->size / 2];
+    free(arr);
+    return median;
 }
 
-t_stack_node	*find_max_node(t_stack_node *stack)
+t_node *find_max_node(t_stack *stack)
+{  // Returns t_node*
+    t_node *max;
+	t_node *current;
+
+    if (!stack || !stack->top)
+		return NULL;
+    max = stack->top;
+    current = stack->top->next;
+    
+    while (current) {
+        if (current->value > max->value)
+            max = current;
+        current = current->next;
+    }
+    return max;
+}
+
+char	*ft_substr(char const *string, unsigned int start, size_t len)
 {
-	if (!stack)
-		return (true);
-	while (stack->next)
+	char	*sub_str;
+	size_t	string_len;
+	size_t	i;
+
+	if (!string)
+		return (NULL);
+	string_len = ft_strlen(string);
+	if (start >= string_len)
+		return (ft_strdup(""));
+	if (len > string_len - start)
+		len = string_len - start;
+	sub_str = ft_calloc(len + 1, sizeof(char));
+	if (!sub_str)
+		return (NULL);
+	i = 0;
+	while (i < len)
 	{
-		if (stack->value > stack->next->value)
-			return (false);
-		stack = stack->next;
+		sub_str[i] = string[start + i];
+		i++;
 	}
-	return (true);
+	return (sub_str);
 }

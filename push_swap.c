@@ -12,144 +12,72 @@
 
 #include "push_swap.h"
 
-<<<<<<< HEAD
 void push_chunks_to_b(t_stack **a, t_stack **b, int chunk_size);
 void sort_and_push_back(t_stack **a, t_stack **b);
 
 // Main sorting function
-void push_swap(t_stack **a, t_stack **b)
-{
-    if (is_sorted(*a)) // expects t_stack *, so pass *a
-        return;
+// void push_swap(t_stack **a, t_stack **b)
+// {
+//     if (stack_sorted(*a)) // expects t_stack *, so pass *a
+//         return;
     
-    int size = (*a)->size; // a is t_stack **, so use (*a)->size
+//     int size = (*a)->size; // a is t_stack **, so use (*a)->size
     
-    if (size <= 3)
-        sort_three(a); // expects t_stack **, so pass a
-    else if (size <= 5)
-        sort_five(a, b); // expects t_stack **, so pass a and b
-    else
-    {
-        // Determine optimal chunk size based on input size
-        int chunk_size = (size <= 100) ? 15 : 30;
+//     if (size <= 3)
+//         sort_three(a); // expects t_stack **, so pass a
+//     else if (size <= 5)
+//         sort_five(a, b); // expects t_stack **, so pass a and b
+//     else
+//     {
+//         // Determine optimal chunk size based on input size
+//         int chunk_size = (size <= 100) ? 15 : 30;
         
-        // Phase 1: Push elements to stack B in chunks
-        push_chunks_to_b(a, b, chunk_size); // expects t_stack **, so pass a and b
+//         // Phase 1: Push elements to stack B in chunks
+//         push_chunks_to_b(a, b, chunk_size); // expects t_stack **, so pass a and b
         
-        // Phase 2: Sort and push back to stack A
-        sort_and_push_back(a, b); // expects t_stack **, so pass a and b
-    }
-}
+//         // Phase 2: Sort and push back to stack A
+//         sort_and_push_back(a, b); // expects t_stack **, so pass a and b
+//     }
+// }
 
 // Push elements to stack B in chunks
-void push_chunks_to_b(t_stack **a, t_stack **b, int chunk_size)
-{
-    int min;
-    int max;
-    int pushed;
-    int chunk_count = 0;
-    int total_chunks = ((*a)->size / chunk_size) + 1;
+// void push_chunks_to_b(t_stack **a, t_stack **b, int chunk_size)
+// {
+//     int min;
+//     int max;
+//     int pushed;
+//     int chunk_count = 0;
+//     int total_chunks = ((*a)->size / chunk_size) + 1;
     
-    while (chunk_count < total_chunks && (*a)->size > 3)
-    {
-        min = get_min(*a); // expects t_stack *, so pass *a
-        max = get_max(*a); // expects t_stack *, so pass *a
-        int chunk_min = min + (chunk_count * chunk_size);
-        int chunk_max = chunk_min + chunk_size;
-        if (chunk_max > max)
-            chunk_max = max;
+//     while (chunk_count < total_chunks && (*a)->size > 3)
+//     {
+//         min = get_min(*a); // expects t_stack *, so pass *a
+//         max = get_max(*a); // expects t_stack *, so pass *a
+//         int chunk_min = min + (chunk_count * chunk_size);
+//         int chunk_max = chunk_min + chunk_size;
+//         if (chunk_max > max)
+//             chunk_max = max;
         
-        pushed = 0;
-        while (pushed < chunk_size && (*a)->size > 3)
-        {
-            int current = (*a)->top->value;
-            if (current >= chunk_min && current <= chunk_max)
-            {
-                pb(a, b);
-                pushed++;
-                // Rotate to keep larger numbers at bottom of B
-                if ((*b)->size > 1 && current < chunk_min + (chunk_size / 2))
-                    rb(b, true); // pass bool print
-                else
-                    ra(a, true); // pass bool print
-            }
-            else
-                ra(a, true);
-        }
-        chunk_count++;
-    }
-=======
-bool	stack_sorted(t_stack_node *stack)
-{
-	if (!stack)
-		return (true);
-	while (stack->next)
-	{
-		if (stack->value > stack->next->value)
-			return (false);
-		stack = stack->next;
-	}
-	return (true);
-}
-
-static void	push_to_b(t_stack_node **a, t_stack_node **b, int median)
-{
-	int	len;
-	int	i;
-
-	len = stack_len(*a);
-	i = 0;
-	while (i < len && stack_len(*a) > 3)
-	{
-		if ((*a)->value < median)
-			pb(a, b);
-		else
-			ra(a, true);
-		i++;
-	}
-}
-
-static void	push_back_to_a(t_stack_node **a, t_stack_node **b)
-{
-	t_stack_node	*max_node;
-//	int				len;
-
-	while (*b)
-	{
-	//	len = stack_len(*b);
-		max_node = find_max_node(*b);
-		if (max_node->value == (*b)->value)
-			pa(a, b);
-		else if (max_node->value == (*b)->next->value)
-		{
-			sb(b, true);
-			pa(a, b);
-		}
-		else
-		{
-			if (max_node->value > (*b)->value)
-				rb(b, true);
-			else
-				rrb(b, true);
-		}
-	}
-}
-
-void	push_swap(t_stack_node **a, t_stack_node **b)
-{
-	int	median;
-
-	if (stack_len(*a) <= 3)
-	{
-		small_sort(a);
-		return ;
-	}
-	median = find_median(*a);
-	push_to_b(a, b, median);
-	small_sort(a);
-	push_back_to_a(a, b);
->>>>>>> parent of c083e4b (update)
-}
+//         pushed = 0;
+//         while (pushed < chunk_size && (*a)->size > 3)
+//         {
+//             int current = (*a)->top->value;
+//             if (current >= chunk_min && current <= chunk_max)
+//             {
+//                 pb(a, b);
+//                 pushed++;
+//                 // Rotate to keep larger numbers at bottom of B
+//                 if ((*b)->size > 1 && current < chunk_min + (chunk_size / 2))
+//                     rb(b, true); // pass bool print
+//                 else
+//                     ra(a, true); // pass bool print
+//             }
+//             else
+//                 ra(a, true);
+//         }
+//         chunk_count++;
+//     }
+// }
 
 // Sort stack B and push elements back to stack A
 void sort_and_push_back(t_stack **a, t_stack **b)

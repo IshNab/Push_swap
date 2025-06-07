@@ -11,37 +11,36 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "libft.h"
 
 static int	word_count(const char *str, char c);
 static int	word_len(const char *str, char c);
 static void	*free_str(char **strs);
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *str, char c)
 {
 	char	**strs;
 	int		i;
 	int		count;
 
-	if (!s)
+	if (!str)
 		return (NULL);
-	count = word_count(s, c);
+	count = word_count(str, c);
 	strs = malloc(sizeof(char *) * (count + 1));
 	if (!strs)
 		return (NULL);
 	strs[count] = NULL;
 	i = 0;
-	while (*s)
+	while (*str)
 	{
-		if (*s != c)
+		if (*str != c)
 		{
-			strs[i] = ft_substr(s, 0, word_len(s, c));
+			strs[i] = ft_substr(str, 0, word_len(str, c));
 			if (!strs[i++])
 				return (free_str(strs));
-			s += word_len(s, c);
+			str += word_len(str, c);
 		}
 		else
-			s++;
+			str++;
 	}
 	return (strs);
 }
