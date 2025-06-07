@@ -47,7 +47,7 @@ int find_median(t_stack *stack)
 {
     int *arr;
     int i, median;
-    t_node *current;
+    t_stack *current;
 
     if (!stack || !stack->top)
 		return 0;
@@ -56,7 +56,8 @@ int find_median(t_stack *stack)
 		return 0;
     current = stack->top;
     i = 0;
-    while (current) {
+    while (current)
+	{
         arr[i++] = current->value;  // Access via node
         current = current->next;    // Node's next pointer
     }
@@ -66,10 +67,10 @@ int find_median(t_stack *stack)
     return median;
 }
 
-t_node *find_max_node(t_stack *stack)
+t_stack *find_max_node(t_stack *stack)
 {  // Returns t_node*
-    t_node *max;
-	t_node *current;
+    t_stack *max;
+	t_stack *current;
 
     if (!stack || !stack->top)
 		return NULL;

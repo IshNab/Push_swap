@@ -2,7 +2,7 @@
 
 bool stack_sorted(t_stack *stack)
 {
-    t_node *current;
+    t_stack *current;
 
     if (!stack || !stack->top)  // Empty stack is considered sorted
         return (true);

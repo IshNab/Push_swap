@@ -12,127 +12,43 @@
 
 #include "push_swap.h"
 
-void ra(t_stack **a, bool print)
+/*
+ * Top node to bottom position
+*/
+static void	rotate(t_stack **stack)
 {
-    if (!a || !(*a) || !(*a)->top || !(*a)->top->next)
-        return;
+	t_stack	*last_node;
+	int				len;
 
-    t_node *first = (*a)->top;
-    t_node *last = (*a)->top;
+	len = stack_len(*stack);
+	if (NULL == stack || NULL == *stack || 1 == len)
+		return ;
+	last_node = find_last_node(*stack);
+	last_node->next = *stack;
+	*stack = (*stack)->next;
+	(*stack)->prev = NULL;
+	last_node->next->prev = last_node;
+	last_node->next->next = NULL;
+}	
 
-    // Find the last node
-    while (last->next)
-        last = last->next;
-
-    // Move top to bottom
-    (*a)->top = first->next;
-    (*a)->top->prev = NULL;
-    last->next = first;
-    first->prev = last;
-    first->next = NULL;
-
-    if (print)
-        write(1, "ra\n", 3);
+void	ra(t_stack **a, bool checker)
+{
+	rotate(a);
+	if (!checker)
+		write(1, "ra\n", 3);
 }
 
-/* Rotate stack B - shift all elements up by 1 (first becomes last) */
-void rb(t_stack **b, bool print)
+void	rb(t_stack **b, bool checker)
 {
-    if (!b || !(*b) || !(*b)->top || !(*b)->top->next)
-        return;
-    
-    t_node *first = (*b)->top;
-    t_node *last = (*b)->top;
-    
-    // Find last node
-    while (last->next)
-        last = last->next;
-    
-    // Perform rotation
-    (*b)->top = first->next;
-    (*b)->top->prev = NULL;
-    first->next = NULL;
-    first->prev = last;
-    last->next = first;
-    
-    if (print)
-        write(1, "rb\n", 3);
+	rotate(b);
+	if (!checker)
+		write(1, "rb\n", 3);
 }
 
-/* Rotate both stacks A and B */
-void rr(t_stack **a, t_stack **b)
+void	rr(t_stack **a, t_stack **b, bool checker)
 {
-    if (!a || !b || !(*a) || !(*b))
-        return;
-    
-    // Rotate both stacks without printing
-    ra(a, false);
-    rb(b, false);
-    
-    write(1, "rr\n", 3);
-}
-
-/* Reverse rotate stack A - shift all elements down by 1 (last becomes first) */
-void rra(t_stack **a, bool print)
-{
-    if (!a || !(*a) || !(*a)->top || !(*a)->top->next)
-        return;
-    
-    t_node *last = (*a)->top;
-    t_node *second_last = NULL;
-    
-    // Find last and second last nodes
-    while (last->next) {
-        second_last = last;
-        last = last->next;
-    }
-    
-    // Perform reverse rotation
-    last->next = (*a)->top;
-    (*a)->top->prev = last;
-    second_last->next = NULL;
-    last->prev = NULL;
-    (*a)->top = last;
-    
-    if (print)
-        write(1, "rra\n", 4);
-}
-
-/* Reverse rotate stack B */
-void rrb(t_stack **b, bool print)
-{
-    if (!b || !(*b) || !(*b)->top || !(*b)->top->next)
-        return;
-    
-    t_node *last = (*b)->top;
-    t_node *second_last = NULL;
-    
-    // Find last and second last nodes
-    while (last->next) {
-        second_last = last;
-        last = last->next;
-    }
-    
-    // Perform reverse rotation
-    last->next = (*b)->top;
-    (*b)->top->prev = last;
-    second_last->next = NULL;
-    last->prev = NULL;
-    (*b)->top = last;
-    
-    if (print)
-        write(1, "rrb\n", 4);
-}
-
-/* Reverse rotate both stacks A and B */
-void rrr(t_stack **a, t_stack **b)
-{
-    if (!a || !b || !(*a) || !(*b))
-        return;
-    
-    // Reverse rotate both stacks without printing
-    rra(a, false);
-    rrb(b, false);
-    
-    write(1, "rrr\n", 4);
+	rotate(a);
+	rotate(b);
+	if (!checker)
+		write(1, "rr\n", 3);
 }

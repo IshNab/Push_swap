@@ -52,7 +52,7 @@ void sort_five(t_stack **a, t_stack **b)
         int min = get_min(*a);
         if ((*a)->top->value == min)
         {
-            pb(a, b);
+            pb(a, b, true); //is this supposed to be false?
             pushed++;
             rotations = 0; // Reset rotation counter after successful push
         }
@@ -71,5 +71,5 @@ void sort_five(t_stack **a, t_stack **b)
 
     // Push back elements from stack B
     while (*b && (*b)->size > 0)
-        pa(a, b);
+        pa(a, b, true); //is this supposed to be false?
 }

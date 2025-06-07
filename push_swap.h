@@ -19,30 +19,33 @@
 # include <stdbool.h>
 # include <unistd.h>
 
-// In your header file:
-typedef struct s_node {
-    int value;
-    struct s_node *next;
-    struct s_node *prev;  // Only if you need doubly-linked
-} t_node;
-
-typedef struct s_stack {
-    t_node *top;    // Pointer to top node
-    int size;       // Number of elements
-} t_stack;
+typedef struct s_stack
+{
+	t_stack *top;    // Pointer to top node
+    int size; 
+    int					value;
+	int					current_position;
+	int					final_index;
+	int					push_price;
+	bool				above_median;
+	bool				cheapest;
+	struct s_stack	*target_node;
+	struct s_stack	*next;
+	struct s_stack	*prev;
+}				t_stack;
 
 // Stack operations
-void    pa(t_stack **a, t_stack **b);
-void    pb(t_stack **a, t_stack **b);
+void	pa(t_stack **a, t_stack **b, bool checker);
+void	pb(t_stack **b, t_stack **a, bool checker);
 void    sa(t_stack **a, bool print);
 void    sb(t_stack **b, bool print);
 void    ss(t_stack **a, t_stack **b);
-void    ra(t_stack **a, bool print);
-void    rb(t_stack **b, bool print);
-void    rr(t_stack **a, t_stack **b);
-void    rra(t_stack **a, bool print);
-void    rrb(t_stack **b, bool print);
-void    rrr(t_stack **a, t_stack **b);
+void	ra(t_stack **a, bool checker);
+void	rb(t_stack **b, bool checker);
+void	rr(t_stack **a, t_stack **b, bool checker);
+void	rra(t_stack **a, bool checker);
+void	rrb(t_stack **b, bool checker);
+void	rrr(t_stack **a, t_stack **b, bool checker);
 
 // Helper functions
 int     stack_init(t_stack **a, char **argv, bool is_split);
@@ -51,7 +54,7 @@ bool	stack_sorted(t_stack *stack);
 int     get_min(t_stack *s);
 int     get_max(t_stack *s);
 int     get_median(t_stack *s, int size);
-void    push_swap(t_stack **a, t_stack **b);
+//void    push_swap(t_stack **a, t_stack **b);
 void    free_split(char **split);
 void    free_stack(t_stack **stack);
 void    append_node(t_stack **stack, int n);
@@ -69,5 +72,24 @@ char	*ft_substr(char const *string, unsigned int start, size_t len);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *src);
 int     ft_strlen(const char *str);
+
+//oceano utils
+void	push_swap(t_stack **a, t_stack **b);
+static void	move_nodes(t_stack **a, t_stack **b);
+void	finish_rotation(t_stack **stack,
+							t_stack *top_node,
+							char stack_name);
+static void	reverse_rotate_both(t_stack **a,
+								t_stack **b,
+								t_stack *cheapest_node);
+static void	rotate_both(t_stack **a,
+						t_stack **b,
+						t_stack *cheapest_node);
+void	set_current_position(t_stack *stack);
+static void	set_target_node(t_stack *a,
+							t_stack *b);
+void	set_price(t_stack *a, t_stack *b);
+void	set_cheapest(t_stack *b);
+void	init_nodes(t_stack *a, t_stack *b);
 
 #endif

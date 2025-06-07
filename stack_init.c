@@ -17,8 +17,8 @@ void free_stack(t_stack **stack)
     if (!stack || !*stack)
         return;
     
-    t_node *current = (*stack)->top;
-    t_node *tmp;
+    t_stack *current = (*stack)->top;
+    t_stack *tmp;
     
     while (current)
     {
@@ -49,7 +49,7 @@ void append_node(t_stack **stack, int n)
     if (!stack)
         return;
     
-    t_node *node = malloc(sizeof(t_node));
+    t_stack *node = malloc(sizeof(t_stack));
     if (!node)
         return; // or handle error
     
@@ -77,7 +77,7 @@ void append_node(t_stack **stack, int n)
         return;
     }
     
-    t_node *last = (*stack)->top;
+    t_stack *last = (*stack)->top;
     while (last->next)
         last = last->next;
     

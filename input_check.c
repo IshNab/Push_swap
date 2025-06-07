@@ -55,8 +55,8 @@ bool	check_input(char *str)
 
 bool check_duplicates(t_stack *stack)
 {
-    t_node *current;
-    t_node *check;
+    t_stack *current;
+    t_stack *check;
 
     if (!stack || !stack->top)
         return false;  // Empty stack has no duplicates
