@@ -75,21 +75,13 @@ int     ft_strlen(const char *str);
 
 //oceano utils
 void	push_swap(t_stack **a, t_stack **b);
-static void	move_nodes(t_stack **a, t_stack **b);
 void	finish_rotation(t_stack **stack,
 							t_stack *top_node,
 							char stack_name);
-static void	reverse_rotate_both(t_stack **a,
-								t_stack **b,
-								t_stack *cheapest_node);
-static void	rotate_both(t_stack **a,
-						t_stack **b,
-						t_stack *cheapest_node);
 void	set_current_position(t_stack *stack);
-static void	set_target_node(t_stack *a,
-							t_stack *b);
 void	set_price(t_stack *a, t_stack *b);
 void	set_cheapest(t_stack *b);
 void	init_nodes(t_stack *a, t_stack *b);
+t_stack	*find_last_node(t_stack *head);
 
 #endif

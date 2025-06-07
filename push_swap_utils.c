@@ -12,6 +12,15 @@
 
 #include "push_swap.h"
 
+t_stack	*find_last_node(t_stack *head)
+{
+	if (NULL == head)
+		return (NULL);
+	while (head->next)
+		head = head->next;
+	return (head);
+}
+
 int stack_len(t_stack *stack)
 {
     if (!stack)
