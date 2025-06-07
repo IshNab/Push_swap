@@ -21,7 +21,7 @@
 
 typedef struct s_stack
 {
-	t_stack *top;    // Pointer to top node
+	struct s_stack *top;    // Pointer to top node
     int size; 
     int					value;
 	int					current_position;
