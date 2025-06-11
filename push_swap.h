@@ -3,8 +3,9 @@
 
 # include <stdbool.h> //To use bool flags, e.g, to print or not to print
 # include <limits.h> //To define MIN and MAX macros
-# include "../libft/inc/libft.h"
-# include "../libft/inc/ft_printf.h"
+# include <stdlib.h>
+# include <stddef.h>
+# include <unistd.h> //To use write() function
 
 typedef struct s_stack_node //A container of data enclosed in {} braces. `s_` for struct
 {
@@ -27,25 +28,25 @@ void	error_exit(t_stack **a, t_stack **b,
 
 //***Stack initiation
 void	init_stack_a(t_stack_node **a, char **argv); //Initiate stack `a` before processing
-void	init_stack_b(t_stack *a, t_stack *b);
-int		stack_init_a(t_stack **a, char **argv, bool is_split);
+void	init_stack_b(t_stack_node *a, t_stack *b);
+int		stack_init_a(t_stack_node **a, char **argv, bool is_split);
 char	**split(char *s, char c); //To handle input of numbers as a string argument, e.g. enclosed in " "
 
 //***Nodes initiation
 void			init_nodes_a(t_stack_node *a, t_stack_node *b); //To prep all nodes for pushing `a` to `b`
-void			init_nodes_b(t_stack *a, t_stack *b); //To prep all nodes for pushing `b` back to `a`
-void			set_current_position(t_stack *stack); //Set the node's current index
-void			set_price(t_stack *a, t_stack *b);
+void			init_nodes_b(t_stack_node *a, t_stack_node *b); //To prep all nodes for pushing `b` back to `a`
+void			set_current_position(t_stack_node *stack); //Set the node's current index
+void			set_price(t_stack_node *b);
 void			set_cheapest(t_stack_node *stack); //Set the stack's cheapest node
-t_stack			*return_cheapest(t_stack *stack);//Get the cheapest node of a stack
+t_stack_node			*return_cheapest(t_stack_node *stack);//Get the cheapest node of a stack
 void			prep_for_push(t_stack_node **s, t_stack_node *n, char c); //Prep the required nodes on top for pushing
 
 //***Stack utils
 int				stack_len(t_stack_node *stack); //Calculate the length of a stack
-t_stack_node	*find_last(t_stack_node *stack); //Find the last node of a stack
+t_stack_node	*find_last_node(t_stack_node *stack); //Find the last node of a stack
 bool			stack_sorted(t_stack_node *stack); //To check whether a stack is sorted
-t_stack_node	*find_min(t_stack_node *stack); //Find the smallest number
-t_stack_node	*find_max(t_stack_node *stack); //Find the biggest number
+t_stack_node	*find_smallest(t_stack_node *stack); //Find the smallest number
+t_stack_node	*find_max_node(t_stack_node *stack); //Find the biggest number
 
 //***Commands
 void			sa(t_stack_node **a, bool print);

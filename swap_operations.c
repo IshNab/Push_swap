@@ -12,13 +12,13 @@
 
 #include "push_swap.h"
 
-void    sa(t_stack **a, bool print)
+void    sa(t_stack_node **a, bool print)
 {
     if (!a || !(*a)->top || !(*a)->top->next)
         return;
         
-    t_stack *first = (*a)->top;
-    t_stack *second = first->next;
+    t_stack_node *first = (*a)->top;
+    t_stack_node *second = first->next;
     
     // Update pointers
     first->next = second->next;
@@ -36,13 +36,13 @@ void    sa(t_stack **a, bool print)
         write(1, "sa\n", 3);
 }
 
-void sb(t_stack **b, bool print)
+void sb(t_stack_node **b, bool print)
 {
     if (!b || !(*b)->top || !(*b)->top->next)
         return;
         
-    t_stack *first = (*b)->top;
-    t_stack *second = first->next;
+    t_stack_node *first = (*b)->top;
+    t_stack_node *second = first->next;
     
     // Update pointers
     first->next = second->next;
@@ -60,7 +60,7 @@ void sb(t_stack **b, bool print)
         write(1, "sb\n", 3);
 }
 
-void ss(t_stack **a, t_stack **b)
+void ss(t_stack_node **a, t_stack_node **b)
 {
     sa(a, false);
     sb(b, false);

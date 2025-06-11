@@ -13,7 +13,7 @@
 #include "push_swap.h"
 
 // Sort stack with 3 elements
-void sort_three(t_stack **a)
+void sort_three(t_stack_node **a)
 {
     int first = (*a)->top->value;
     int second = (*a)->top->next->value;

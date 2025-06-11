@@ -45,7 +45,7 @@
 // 	free(split);
 // }
 
-void append_node(t_stack **stack, int n)
+void append_node(t_stack_node **stack, int n)
 {
     if (!stack)
         return;
@@ -87,7 +87,7 @@ void append_node(t_stack **stack, int n)
     (*stack)->size++;
 }
 
-int	stack_init_a(t_stack **a, char **argv, bool is_split)
+int	stack_init_a(t_stack_node **a, char **argv, bool is_split)
 {
 	long	n;
 	int		i;
@@ -106,7 +106,7 @@ int	stack_init_a(t_stack **a, char **argv, bool is_split)
 	return (1);
 }
 
-t_stack	*return_cheapest(t_stack *stack)
+t_stack_node	*return_cheapest(t_stack_node *stack)
 {
 	if (stack == NULL)
 		return (NULL);

@@ -5,6 +5,7 @@ CFLAGS = -Wall -Wextra -Werror -I. -Iincludes
 
 SRCS = main.c \
 		input_check.c \
+		stack_init.c \
 		stack_init_a_to_b.c \
 		stack_init_b_to_a.c \
 		ft_split.c \
@@ -12,21 +13,20 @@ SRCS = main.c \
 		small_sort.c \
 		swap_operations.c \
 		rotate_operations.c \
+		reverse_operations \
 		push_operations.c \
-		push_swap_utils.c \
-		push_swap_utils_2.c
+		push_swap_utils.c
+		
 
 OBJS = $(SRCS:.c=.o)
 
 INCLUDES = -Iincludes
 
-#LIBFT_LIB = includes/libft.a
-
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS)  -lm -o $@
-#$(LIBFT_LIB)
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 

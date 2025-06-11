@@ -4,19 +4,19 @@
  * Set the current position of every node 
  * in the current state-configuration
 */
-void	set_current_position(t_stack *stack)
+void	set_current_position(t_stack_node *stack)
 {
 	int	i;
-	int	centerline;
+	int	median;
 
 	i = 0;
 	if (NULL == stack)
 		return ;
-	centerline = stack_len(stack) / 2;
+	median = stack_len(stack) / 2;
 	while (stack)
 	{
 		stack->current_position = i;
-		if (i <= centerline)
+		if (i <= median)
 			stack->above_median = true;
 		else
 			stack->above_median = false;
@@ -33,11 +33,11 @@ void	set_current_position(t_stack *stack)
  *  TLDR 
  *  With this function every node in b gets its target node in a
 */
-static void	set_target_node(t_stack *a,
-							t_stack *b)
+static void	set_target_node(t_stack_node *a,
+							t_stack_node *b)
 {
-	t_stack	*current_a;
-	t_stack	*target_node;
+	t_stack_node	*current_a;
+	t_stack_node	*target_node;
 	long			best_match_index;
 
 	while (b)
@@ -68,7 +68,7 @@ static void	set_target_node(t_stack *a,
  * The price checks for the relative positions in the stack
  * for every node, setting the respective price
 */
-void	set_price(t_stack *a, t_stack *b)
+void	set_price(t_stack_node *a, t_stack_node *b)
 {
 	int	len_a;
 	int	len_b;
@@ -92,10 +92,10 @@ void	set_price(t_stack *a, t_stack *b)
  * Flag the cheapest node in the current
  * stacks configurations
 */
-void	set_cheapest(t_stack *b)
+void	set_cheapest(t_stack_node *b)
 {
 	long			best_match_value;
-	t_stack	*best_match_node;
+	t_stack_node	*best_match_node;
 
 	if (NULL == b)
 		return ;
@@ -119,7 +119,7 @@ void	set_cheapest(t_stack *b)
  * 		~Price for every configuration
  * 		~Cheapest in the current configuration
 */
-void	init_nodes_a(t_stack *a, t_stack *b)
+void	init_nodes_a(t_stack_node *a, t_stack_node *b)
 {
 	set_current_position(a);
 	set_current_position(b);

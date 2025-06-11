@@ -12,109 +12,82 @@
 
 #include "push_swap.h"
 
-t_stack	*find_last_node(t_stack *head)
+t_stack_node	*find_last_node(t_stack_node *stack)
 {
-	if (NULL == head)
+	if (NULL == stack)
 		return (NULL);
-	while (head->next)
-		head = head->next;
-	return (head);
+	while (stack->next)
+		stack->next;
+	return (stack);
 }
 
-int stack_len(t_stack *stack)
+int	stack_len(t_stack_node *stack) //Define a function that calculates and returns the length of a stack
 {
-    if (!stack)
-		return 0;
-    return stack->size;  // O(1) access
-}
+	int	count; //To store the node count
 
-static void	sort_array(int *arr, int len)
-{
-	int	i;
-	int	j;
-	int	temp;
-
-	i = 0;
-	while (i < len - 1)
+	if (!stack) 
+		return (0);
+	count = 0;
+	while (stack) //Loop until the end of the stack is reached
 	{
-		j = 0;
-		while (j < len - i - 1)
+		stack = stack->next; //Move to the next node
+		count++;
+	}
+	return (count);
+}
+
+bool stack_sorted(t_stack_node *stack)
+{
+    t_stack_node *current;
+
+    if (!stack || !stack->top)  // Empty stack is considered sorted
+        return (true);
+    current = stack->top;  // Start at the top node
+    while (current->next)  // While not at the last node
+    {
+        if (current->value > current->next->value)
+            return (false);  // Found unsorted pair
+        current = current->next;  // Move to next node
+    }
+    return (true);  // All elements are in order
+}
+
+t_stack_node	*find_smallest(t_stack_node *stack)
+{
+	long			smallest;
+	t_stack_node	*smallest_node;
+
+	if (NULL == stack)
+		return (NULL);
+	smallest = LONG_MAX;
+	while (stack)
+	{
+		if (stack->value < smallest)
 		{
-			if (arr[j] > arr[j + 1])
-			{
-				temp = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = temp;
-			}
-			j++;
+			smallest = stack->value;
+			smallest_node = stack;
 		}
-		i++;
+		stack = stack->next;
 	}
+	return (smallest_node);
 }
 
-int find_median(t_stack *stack)
+t_stack_node			*find_max_node(t_stack_node *stack)
 {
-    int *arr;
-    int i, median;
-    t_stack *current;
+	long			max; //To store the biggest value so far
+	t_stack_node	*max_node; //To store a pointer that points to the biggest number
 
-    if (!stack || !stack->top)
-		return 0;
-    arr = malloc(sizeof(int) * stack->size);
-    if (!arr)
-		return 0;
-    current = stack->top;
-    i = 0;
-    while (current)
-	{
-        arr[i++] = current->value;  // Access via node
-        current = current->next;    // Node's next pointer
-    }
-    sort_array(arr, stack->size);
-    median = arr[stack->size / 2];
-    free(arr);
-    return median;
-}
-
-t_stack *find_max_node(t_stack *stack)
-{  // Returns t_node*
-    t_stack *max;
-	t_stack *current;
-
-    if (!stack || !stack->top)
-		return NULL;
-    max = stack->top;
-    current = stack->top->next;
-    
-    while (current) {
-        if (current->value > max->value)
-            max = current;
-        current = current->next;
-    }
-    return max;
-}
-
-char	*ft_substr(char const *string, unsigned int start, size_t len)
-{
-	char	*sub_str;
-	size_t	string_len;
-	size_t	i;
-
-	if (!string)
+	if (!stack)
 		return (NULL);
-	string_len = ft_strlen(string);
-	if (start >= string_len)
-		return (ft_strdup(""));
-	if (len > string_len - start)
-		len = string_len - start;
-	sub_str = ft_calloc(len + 1, sizeof(char));
-	if (!sub_str)
-		return (NULL);
-	i = 0;
-	while (i < len)
+	max = LONG_MIN; //Assign to the biggest value so far, the max long integer
+	while (stack) //Loop until the end of the stack is reached
 	{
-		sub_str[i] = string[start + i];
-		i++;
+		if (stack->nbr > max) //Check if the current node value is smaller than the biggest so far
+		{
+			max = stack->nbr; //If so, update the biggest number so far
+			max_node = stack; //Set the pointer to point to the node with the biggest number so far
+		}
+		stack = stack->next; //Move to the next node for processing
 	}
-	return (sub_str);
+	return (max_node);
 }
