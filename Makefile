@@ -5,7 +5,8 @@ CFLAGS = -Wall -Wextra -Werror -I. -Iincludes
 
 SRCS = main.c \
 		input_check.c \
-		stack_init.c \
+		stack_init_a_to_b.c \
+		stack_init_b_to_a.c \
 		ft_split.c \
 		push_swap.c \
 		small_sort.c \

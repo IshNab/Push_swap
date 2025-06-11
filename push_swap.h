@@ -1,87 +1,67 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 13:04:37 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 17:08:51 by inabakka         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <stdlib.h>
-# include <stddef.h>
-# include <limits.h>
-# include <stdbool.h>
-# include <unistd.h>
+# include <stdbool.h> //To use bool flags, e.g, to print or not to print
+# include <limits.h> //To define MIN and MAX macros
+# include "../libft/inc/libft.h"
+# include "../libft/inc/ft_printf.h"
 
-typedef struct s_stack
+typedef struct s_stack_node //A container of data enclosed in {} braces. `s_` for struct
 {
-	struct s_stack *top;    // Pointer to top node
-    int size; 
-    int					value;
-	int					current_position;
-	int					final_index;
-	int					push_price;
-	bool				above_median;
-	bool				cheapest;
-	struct s_stack	*target_node;
-	struct s_stack	*next;
-	struct s_stack	*prev;
-}				t_stack;
+	int					nbr; //The number to sort
+	int					index; //The number's position in the stack
+	int					push_cost; //How many commands in total
+	bool				above_median; //Used to calculate `push_cost`
+	bool				cheapest; //The node that is the cheapest to do commands
+	struct s_stack_node	*target_node; //The target node of a node in the opposite stack
+	struct s_stack_node	*next; //A pointer to the next node
+	struct s_stack_node	*prev; //A pointer to the previous node
+}	t_stack_node; //The "shortened name", "t_stack_node". `t_` for type
 
-// Stack operations
-void	pa(t_stack **a, t_stack **b, bool checker);
-void	pb(t_stack **b, t_stack **a, bool checker);
-void    sa(t_stack **a, bool print);
-void    sb(t_stack **b, bool print);
-void    ss(t_stack **a, t_stack **b);
-void	ra(t_stack **a, bool checker);
-void	rb(t_stack **b, bool checker);
-void	rr(t_stack **a, t_stack **b, bool checker);
-void	rra(t_stack **a, bool checker);
-void	rrb(t_stack **b, bool checker);
-void	rrr(t_stack **a, t_stack **b, bool checker);
-
-// Helper functions
-int     stack_init(t_stack **a, char **argv, bool is_split);
-int     stack_len(t_stack *stack);
-bool	stack_sorted(t_stack *stack);
-int     get_min(t_stack *s);
-int     get_max(t_stack *s);
-int     get_median(t_stack *s, int size);
-//void    push_swap(t_stack **a, t_stack **b);
-void    free_split(char **split);
-void    free_stack(t_stack **stack);
-void    append_node(t_stack **stack, int n);
-void    sort_three(t_stack **a);
-void    sort_five(t_stack **a, t_stack **b);
-void	error_exit(t_stack **a, t_stack **b,
-	char **split, bool is_split);
-char    **ft_split(char const *str, char c);
+//***Input check
 long	ft_atol(const char *str);
 bool	check_input(char *str);
 bool    check_duplicates(t_stack *stack);
-char	*ft_substr(char const *string, unsigned int start, size_t len);
+void	error_exit(t_stack **a, t_stack **b,
+	char **split, bool is_split);
 
-//push_swap_utils_2.c
-void	*ft_calloc(size_t count, size_t size);
-char	*ft_strdup(const char *src);
-int     ft_strlen(const char *str);
+//***Stack initiation
+void	init_stack_a(t_stack_node **a, char **argv); //Initiate stack `a` before processing
+void	init_stack_b(t_stack *a, t_stack *b);
+int		stack_init_a(t_stack **a, char **argv, bool is_split);
+char	**split(char *s, char c); //To handle input of numbers as a string argument, e.g. enclosed in " "
 
-//oceano utils
-void	push_swap(t_stack **a, t_stack **b);
-void	finish_rotation(t_stack **stack,
-							t_stack *top_node,
-							char stack_name);
-void	set_current_position(t_stack *stack);
-void	set_price(t_stack *a, t_stack *b);
-void	set_cheapest(t_stack *b);
-void	init_nodes(t_stack *a, t_stack *b);
-t_stack	*find_last_node(t_stack *head);
+//***Nodes initiation
+void			init_nodes_a(t_stack_node *a, t_stack_node *b); //To prep all nodes for pushing `a` to `b`
+void			init_nodes_b(t_stack *a, t_stack *b); //To prep all nodes for pushing `b` back to `a`
+void			set_current_position(t_stack *stack); //Set the node's current index
+void			set_price(t_stack *a, t_stack *b);
+void			set_cheapest(t_stack_node *stack); //Set the stack's cheapest node
+t_stack			*return_cheapest(t_stack *stack);//Get the cheapest node of a stack
+void			prep_for_push(t_stack_node **s, t_stack_node *n, char c); //Prep the required nodes on top for pushing
+
+//***Stack utils
+int				stack_len(t_stack_node *stack); //Calculate the length of a stack
+t_stack_node	*find_last(t_stack_node *stack); //Find the last node of a stack
+bool			stack_sorted(t_stack_node *stack); //To check whether a stack is sorted
+t_stack_node	*find_min(t_stack_node *stack); //Find the smallest number
+t_stack_node	*find_max(t_stack_node *stack); //Find the biggest number
+
+//***Commands
+void			sa(t_stack_node **a, bool print);
+void			sb(t_stack_node **b, bool print);
+void			ss(t_stack_node **a, t_stack_node **b, bool print);
+void			ra(t_stack_node **a, bool print);
+void			rb(t_stack_node **b, bool print);
+void			rr(t_stack_node **a, t_stack_node **b, bool print);
+void			rra(t_stack_node **a, bool print);
+void			rrb(t_stack_node **b, bool print);
+void			rrr(t_stack_node **a, t_stack_node **b, bool print);
+void			pa(t_stack_node **a, t_stack_node **b, bool print);
+void			pb(t_stack_node **b, t_stack_node **a, bool print);
+
+//***Algorithm
+void			small_sort(t_stack_node **a);
+void			sort_stacks(t_stack_node **a, t_stack_node **b); //Turk algorithm
 
 #endif

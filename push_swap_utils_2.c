@@ -62,3 +62,24 @@ int ft_strlen(const char *str)
         i++;
     return (i);
 }
+
+t_stack	*find_smallest(t_stack *stack)
+{
+	long			smallest;
+	t_stack	*smallest_node;
+
+	if (NULL == stack)
+		return (NULL);
+	smallest = LONG_MAX;
+	while (stack)
+	{
+		if (stack->value < smallest)
+		{
+			smallest = stack->value;
+			smallest_node = stack;
+		}
+		stack = stack->next;
+	}
+	return (smallest_node);
+}
+

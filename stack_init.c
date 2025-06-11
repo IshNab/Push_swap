@@ -12,37 +12,38 @@
 
 #include "push_swap.h"
 
-void free_stack(t_stack **stack)
-{
-    if (!stack || !*stack)
-        return;
+**where do these go?**
+// void free_stack(t_stack **stack)
+// {
+//     if (!stack || !*stack)
+//         return;
     
-    t_stack *current = (*stack)->top;
-    t_stack *tmp;
+//     t_stack *current = (*stack)->top;
+//     t_stack *tmp;
     
-    while (current)
-    {
-        tmp = current->next;
-        free(current);
-        current = tmp;
-    }
+//     while (current)
+//     {
+//         tmp = current->next;
+//         free(current);
+//         current = tmp;
+//     }
     
-    free(*stack);
-    *stack = NULL;
-}
+//     free(*stack);
+//     *stack = NULL;
+// }
 
-void	free_split(char **split)
-{
-	int	i;
+// void	free_split(char **split)
+// {
+// 	int	i;
 
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-}
+// 	i = 0;
+// 	while (split[i])
+// 	{
+// 		free(split[i]);
+// 		i++;
+// 	}
+// 	free(split);
+// }
 
 void append_node(t_stack **stack, int n)
 {
@@ -86,7 +87,7 @@ void append_node(t_stack **stack, int n)
     (*stack)->size++;
 }
 
-int	stack_init(t_stack **a, char **argv, bool is_split)
+int	stack_init_a(t_stack **a, char **argv, bool is_split)
 {
 	long	n;
 	int		i;
@@ -103,4 +104,40 @@ int	stack_init(t_stack **a, char **argv, bool is_split)
 	if (check_duplicates(*a))
 		error_exit(a, NULL, argv, is_split);
 	return (1);
+}
+
+t_stack	*return_cheapest(t_stack *stack)
+{
+	if (stack == NULL)
+		return (NULL);
+	while (stack)
+	{
+		if (stack->cheapest)
+			return (stack);
+		stack = stack->next;
+	}
+	return (NULL);
+}
+
+void	prep_for_push(t_stack_node **stack,
+						t_stack_node *top_node,
+						char stack_name) //Define a function that moves the required node to the top of the stack
+{
+	while (*stack != top_node) //Check if the required node is not already the first node
+	{
+		if (stack_name == 'a') //If not, and it is stack `a`, execute the following
+		{
+			if (top_node->above_median)
+				ra(stack, false);
+			else
+				rra(stack, false);
+		}
+		else if (stack_name == 'b') //If not, and it is stack `b`, execute the following
+		{
+			if (top_node->above_median)
+				rb(stack, false);
+			else
+				rrb(stack, false);
+		}	
+	}
 }

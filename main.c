@@ -12,33 +12,27 @@
 
 #include "push_swap.h"
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv) //Define a program that takes in a random input if numbers and sorts them in ascending order
 {
-	t_stack	*a;
-	t_stack	*b;
+	t_stack	*a; //To store a pointer to stack `a`
+	t_stack	*b; //To store a pointer to stack `b`
 
-	a = NULL;
+	a = NULL; //Set both pointers to NULL to avoid undefined behaviour
 	b = NULL;
-	if (argc == 1 || (argc == 2 && !argv[1][0]))
-		return (0);
-	else if (argc == 2)
-		argv = ft_split(argv[1], ' ');
-	if (!stack_init(&a, argv + 1, argc == 2))
+	if (argc == 1 || (argc == 2 && !argv[1][0])) //Check for incorrect argument counts or if the 2 argument is `0`
 		return (1);
-	if (!stack_sorted(a))
+	else if (argc == 2) //Check if the argument count is 2 and the 2nd is not empty, this implies a string
+		argv = ft_split(argv[1], ' '); //Call ``split()` to extract each substring
+	init_stack_a(&a, argv + 1); //Initiate stack `a`, which also handles errors
+	if (!stack_sorted(a)) //Check if the stack is not sorted
 	{
-		if (stack_len(a) == 2)
-			sa(&a, true);
-		else if (stack_len(a) == 3)
+		if (stack_len(a) == 2) //If not, and there are two numbers, swap the first two nodes
+			sa(&a, false);
+		else if (stack_len(a) == 3) //If not, and there are three numbers, call the sort three algorithm
 			sort_three(&a);
-		else if (stack_len(a) == 5)
-			sort_five(&a, &b);
 		else
-			push_swap(&a, &b);
+			sort_stacks(&a, &b); //If not, and there are more than three numbers, call the sort stacks algorithm
 	}
-	free_stack(&a);
-	free_stack(&b);
-	if (argc == 2)
-		free_split(argv);
+	free_stack(&a); //Clean up the stack
 	return (0);
 }

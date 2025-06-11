@@ -119,7 +119,7 @@ void	set_cheapest(t_stack *b)
  * 		~Price for every configuration
  * 		~Cheapest in the current configuration
 */
-void	init_nodes(t_stack *a, t_stack *b)
+void	init_nodes_a(t_stack *a, t_stack *b)
 {
 	set_current_position(a);
 	set_current_position(b);
