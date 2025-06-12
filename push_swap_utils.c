@@ -17,7 +17,7 @@ t_stack_node	*find_last_node(t_stack_node *stack)
 	if (NULL == stack)
 		return (NULL);
 	while (stack->next)
-		stack->next;
+		stack = stack->next;
 	return (stack);
 }
 
@@ -36,40 +36,48 @@ int	stack_len(t_stack_node *stack) //Define a function that calculates and retur
 	return (count);
 }
 
+#include <stdbool.h>
+#include <limits.h>
+#include "push_swap.h" // Assuming this contains the definition of t_stack_node
+
 bool stack_sorted(t_stack_node *stack)
 {
     t_stack_node *current;
 
-    if (!stack || !stack->top)  // Empty stack is considered sorted
+    if (!stack)  // Empty stack is considered sorted
         return (true);
-    current = stack->top;  // Start at the top node
+
+    current = stack;  // Start at the top node
     while (current->next)  // While not at the last node
     {
-        if (current->value > current->next->value)
+        if (current->nbr > current->next->nbr)
             return (false);  // Found unsorted pair
         current = current->next;  // Move to next node
     }
     return (true);  // All elements are in order
 }
 
-t_stack_node	*find_smallest(t_stack_node *stack)
+t_stack_node *find_smallest(t_stack_node *stack)
 {
-	long			smallest;
-	t_stack_node	*smallest_node;
+    long smallest;
+    t_stack_node *smallest_node;
 
-	if (NULL == stack)
-		return (NULL);
-	smallest = LONG_MAX;
-	while (stack)
-	{
-		if (stack->value < smallest)
-		{
-			smallest = stack->value;
-			smallest_node = stack;
-		}
-		stack = stack->next;
-	}
-	return (smallest_node);
+    if (!stack)
+        return (NULL);
+
+    smallest = LONG_MAX;
+    smallest_node = NULL;
+
+    while (stack)
+    {
+        if (stack->nbr < smallest)
+        {
+            smallest = stack->nbr;
+            smallest_node = stack;
+        }
+        stack = stack->next;
+    }
+    return (smallest_node);
 }
 
 t_stack_node			*find_max_node(t_stack_node *stack)
