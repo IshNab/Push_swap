@@ -12,79 +12,62 @@
 
 #include "push_swap.h"
 
-**where do these go?**
-// void free_stack(t_stack **stack)
-// {
-//     if (!stack || !*stack)
-//         return;
+void free_stack(t_stack_node **stack)
+{
+    if (!stack || !*stack)
+        return;
     
-//     t_stack *current = (*stack)->top;
-//     t_stack *tmp;
+    t_stack_node *current = *stack;  // Start from the head node
+    t_stack_node *tmp;
     
-//     while (current)
-//     {
-//         tmp = current->next;
-//         free(current);
-//         current = tmp;
-//     }
+    while (current)
+    {
+        tmp = current->next;
+        free(current);
+        current = tmp;
+    }
     
-//     free(*stack);
-//     *stack = NULL;
-// }
+    *stack = NULL;  // Set the stack pointer to NULL
+}
 
-// void	free_split(char **split)
-// {
-// 	int	i;
+void	free_split(char **split)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (split[i])
-// 	{
-// 		free(split[i]);
-// 		i++;
-// 	}
-// 	free(split);
-// }
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}
 
 void append_node(t_stack_node **stack, int n)
 {
     if (!stack)
         return;
     
-    t_stack *node = malloc(sizeof(t_stack));
+    t_stack_node *node = malloc(sizeof(t_stack_node));  // Allocate node, not stack
     if (!node)
-        return; // or handle error
+        return;
     
-    node->value = n;
+    node->nbr = n;       // Use 'nbr' instead of 'value'
     node->next = NULL;
     node->prev = NULL;
     
     if (!*stack)
     {
-        *stack = malloc(sizeof(t_stack));
-        if (!*stack)
-        {
-            free(node);
-            return; // or handle error
-        }
-        (*stack)->top = node;
-        (*stack)->size = 1;
+        *stack = node;   // Just assign the node if stack is empty
         return;
     }
     
-    if (!(*stack)->top)
-    {
-        (*stack)->top = node;
-        (*stack)->size = 1;
-        return;
-    }
-    
-    t_stack *last = (*stack)->top;
-    while (last->next)
+    t_stack_node *last = *stack;  // Start from the head
+    while (last->next)            // Traverse to the end
         last = last->next;
     
-    last->next = node;
+    last->next = node;   // Link new node
     node->prev = last;
-    (*stack)->size++;
 }
 
 int	stack_init_a(t_stack_node **a, char **argv, bool is_split)

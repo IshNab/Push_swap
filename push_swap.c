@@ -14,8 +14,8 @@
 
 int	main(int argc, char **argv) //Define a program that takes in a random input if numbers and sorts them in ascending order
 {
-	t_stack	*a; //To store a pointer to stack `a`
-	t_stack	*b; //To store a pointer to stack `b`
+	t_stack_node	*a; //To store a pointer to stack `a`
+	t_stack_node	*b; //To store a pointer to stack `b`
 
 	a = NULL; //Set both pointers to NULL to avoid undefined behaviour
 	b = NULL;

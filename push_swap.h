@@ -10,7 +10,7 @@
 typedef struct s_stack_node //A container of data enclosed in {} braces. `s_` for struct
 {
 	int					nbr; //The number to sort
-	int					index; //The number's position in the stack
+	int					current_position; //The number's position in the stack
 	int					push_cost; //How many commands in total
 	bool				above_median; //Used to calculate `push_cost`
 	bool				cheapest; //The node that is the cheapest to do commands
@@ -22,31 +22,40 @@ typedef struct s_stack_node //A container of data enclosed in {} braces. `s_` fo
 //***Input check
 long	ft_atol(const char *str);
 bool	check_input(char *str);
-bool    check_duplicates(t_stack *stack);
-void	error_exit(t_stack **a, t_stack **b,
+bool    check_duplicates(t_stack_node *stack);
+void	error_exit(t_stack_node **a, t_stack_node **b,
 	char **split, bool is_split);
+char	**ft_split(char const *str, char c);
 
 //***Stack initiation
-void	init_stack_a(t_stack_node **a, char **argv); //Initiate stack `a` before processing
-void	init_stack_b(t_stack_node *a, t_stack *b);
-int		stack_init_a(t_stack_node **a, char **argv, bool is_split);
-char	**split(char *s, char c); //To handle input of numbers as a string argument, e.g. enclosed in " "
+void		init_stack_a(t_stack_node **a, char **argv); //Initiate stack `a` before processing
+void		init_stack_b(t_stack_node *a, t_stack_node *b);
+int			stack_init_a(t_stack_node **a, char **argv, bool is_split);
+char		**split(char *s, char c); //To handle input of numbers as a string argument, e.g. enclosed in " "
 
 //***Nodes initiation
 void			init_nodes_a(t_stack_node *a, t_stack_node *b); //To prep all nodes for pushing `a` to `b`
 void			init_nodes_b(t_stack_node *a, t_stack_node *b); //To prep all nodes for pushing `b` back to `a`
 void			set_current_position(t_stack_node *stack); //Set the node's current index
-void			set_price(t_stack_node *b);
+void			set_price(t_stack_node *a, t_stack_node *b);  // Now takes two args
 void			set_cheapest(t_stack_node *stack); //Set the stack's cheapest node
-t_stack_node			*return_cheapest(t_stack_node *stack);//Get the cheapest node of a stack
+t_stack_node	*return_cheapest(t_stack_node *stack);//Get the cheapest node of a stack
 void			prep_for_push(t_stack_node **s, t_stack_node *n, char c); //Prep the required nodes on top for pushing
+t_stack_node	*find_min(t_stack_node *stack);  // Returns the node with the smallest `nbr`
+
 
 //***Stack utils
+void			free_stack(t_stack_node **stack);
+void			free_split(char **split);
 int				stack_len(t_stack_node *stack); //Calculate the length of a stack
 t_stack_node	*find_last_node(t_stack_node *stack); //Find the last node of a stack
 bool			stack_sorted(t_stack_node *stack); //To check whether a stack is sorted
 t_stack_node	*find_smallest(t_stack_node *stack); //Find the smallest number
 t_stack_node	*find_max_node(t_stack_node *stack); //Find the biggest number
+void			*ft_calloc(size_t count, size_t size);
+char			*ft_strdup(const char *src);
+int 			ft_strlen(const char *str);
+char			*ft_substr(char const *string, unsigned int start, size_t len);
 
 //***Commands
 void			sa(t_stack_node **a, bool print);
@@ -62,7 +71,7 @@ void			pa(t_stack_node **a, t_stack_node **b, bool print);
 void			pb(t_stack_node **b, t_stack_node **a, bool print);
 
 //***Algorithm
-void			small_sort(t_stack_node **a);
-void			sort_stacks(t_stack_node **a, t_stack_node **b); //Turk algorithm
+void	sort_three(t_stack_node **a);
+void	sort_stacks(t_stack_node **a, t_stack_node **b); //Turk algorithm
 
 #endif

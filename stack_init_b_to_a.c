@@ -28,9 +28,9 @@ static void	set_target_b(t_stack_node *a, t_stack_node *b) //Define a function t
 	}
 }
 
-void	init_nodes_b(t_stack *a, t_stack *b) //Define a function that prepares the nodes for pushing `b` to `a`
+void	init_nodes_b(t_stack_node *a, t_stack_node *b) //Define a function that prepares the nodes for pushing `b` to `a`
 {
-	current_index(a);
-	current_index(b);
+	set_current_position(a);
+	set_current_position(b);
 	set_target_b(a, b);
 }
