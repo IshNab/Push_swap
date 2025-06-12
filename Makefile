@@ -10,6 +10,7 @@ SRCS = input_check.c \
        ft_split.c \
        push_swap.c \
        small_sort.c \
+       sort_stacks.c \
        swap_operations.c \
        rotate_operations.c \
        reverse_operations.c \

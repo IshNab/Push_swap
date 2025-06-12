@@ -36,10 +36,6 @@ int	stack_len(t_stack_node *stack) //Define a function that calculates and retur
 	return (count);
 }
 
-#include <stdbool.h>
-#include <limits.h>
-#include "push_swap.h" // Assuming this contains the definition of t_stack_node
-
 bool stack_sorted(t_stack_node *stack)
 {
     t_stack_node *current;

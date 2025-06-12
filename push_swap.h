@@ -40,8 +40,8 @@ void			set_current_position(t_stack_node *stack); //Set the node's current index
 void			set_price(t_stack_node *a, t_stack_node *b);  // Now takes two args
 void			set_cheapest(t_stack_node *stack); //Set the stack's cheapest node
 t_stack_node	*return_cheapest(t_stack_node *stack);//Get the cheapest node of a stack
-void			prep_for_push(t_stack_node **s, t_stack_node *n, char c); //Prep the required nodes on top for pushing
-t_stack_node	*find_min(t_stack_node *stack);  // Returns the node with the smallest `nbr`
+void			prep_for_push(t_stack_node **s, t_stack_node *n, char c); //Prep the required nodes on top for pushing 
+t_stack_node	*find_smallest(t_stack_node *stack); // Returns the node with the smallest `nbr`
 
 
 //***Stack utils

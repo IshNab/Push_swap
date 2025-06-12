@@ -21,7 +21,7 @@ static void	set_target_b(t_stack_node *a, t_stack_node *b) //Define a function t
 			current_a = current_a->next; //Move to the next `a` node for processing
 		}
 		if (best_match_index == LONG_MAX) //If the best match value has not changed
-			b->target_node = find_min(a); //Set `b` node's target node pointer to point to the smallest number in stack `a`
+			b->target_node = find_smallest(a); //Set `b` node's target node pointer to point to the smallest number in stack `a`
 		else
 			b->target_node = target_node; //If the best match value has been updated, then we have a target node for the current `b` node
 		b = b->next; //Move to the next `b` node for processing
