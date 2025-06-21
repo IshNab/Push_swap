@@ -16,36 +16,43 @@ int	main(int argc, char **argv) //Define a program that takes in a random input 
 {
 	t_stack_node	*a; //To store a pointer to stack `a`
 	t_stack_node	*b; //To store a pointer to stack `b`
-	bool			is_split; //To track if the input was split from a single string
+	char			**split_argv; //To store split arguments if input is a single string
+	bool			is_split; //Flag to track if we split the input string
 
-	a = NULL; //Set both pointers to NULL to avoid undefined behaviour
+	a = NULL; //Initialize stack pointers to NULL
 	b = NULL;
-	is_split = false; //Assume input is not split by default
-
-	if (argc == 1 || (argc == 2 && !argv[1][0])) //Check for incorrect argument counts or if the 2nd argument is `0`
+	split_argv = NULL;
+	is_split = false;
+	
+	// Handle argument validation
+	if (argc == 1 || (argc == 2 && !argv[1][0])) //Check for no arguments or empty string argument
 		return (1);
-	else if (argc == 2) //Check if the argument count is 2 and the 2nd is not empty, this implies a string
+	else if (argc == 2) //Handle case where input is a single string of space-separated numbers
 	{
-		argv = ft_split(argv[1], ' '); //Call `split()` to extract each substring
-		is_split = true; //Set flag since we manually split the string
+		split_argv = ft_split(argv[1], ' '); //Split the string into individual number strings
+		is_split = true; //Set flag indicating we used split
+		if (!split_argv) //Check if split failed
+			error_exit(&a, &b, NULL, false); //Clean up and exit on error
 	}
-
-	stack_init_a(&a, argv + (is_split ? 0 : 1), is_split); //Initiate stack `a`, which also handles errors
-
-	if (!stack_sorted(a)) //Check if the stack is not sorted
+	
+	// Initialize stack A with input numbers
+	if (!stack_init_a(&a, is_split ? split_argv : argv + 1, is_split)) //Pass either split array or argv
+		error_exit(&a, &b, split_argv, is_split); //Exit if initialization fails
+	
+	// Perform sorting if stack isn't already sorted
+	if (!stack_sorted(a)) //Only sort if necessary
 	{
-		if (stack_len(a) == 2) //If not, and there are two numbers, swap the first two nodes
-			sa(&a, false);
-		else if (stack_len(a) == 3) //If not, and there are three numbers, call the sort three algorithm
+		if (stack_len(a) == 2) //Special case: just swap two elements
+			sa(&a, true); //Swap with output
+		else if (stack_len(a) == 3) //Optimal sort for three elements
 			sort_three(&a);
-		else
-			sort_stacks(&a, &b); //If not, and there are more than three numbers, call the sort stacks algorithm
+		else //Turk algorithm for larger stacks
+			sort_stacks(&a, &b); //Uses both stacks with optimal moves
 	}
-
-	free_stack(&a); //Clean up the stack
-
-	if (is_split) //Free the split array if `ft_split` was used
-		free_split(argv); //Make sure you implement this helper if needed
-
-	return (0);
+	
+	// Clean up memory
+	free_stack(&a); //Free stack A nodes
+	if (is_split)
+		free_split(split_argv); //Free split array if we created it
+	return (0); //Successful execution
 }
