@@ -36,7 +36,7 @@ void	ra(t_stack_node **a, bool checker)
 	rotate(a);
 	if (!checker)
 		write(1, "ra\n", 3);
-}
+}}
 
 void	rb(t_stack_node **b, bool checker)
 {
