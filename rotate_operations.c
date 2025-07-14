@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate_operations.c                                :+:      :+:    :+:   */
+/*   push_operations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 13:04:43 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/16 13:50:14 by inabakka         ###   ########.fr       */
+/*   Created: 2025/05/16 13:04:28 by inabakka          #+#    #+#             */
+/*   Updated: 2025/06/23 12:33:51 by inabakka           ###   ########.fr     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,24 @@ static void	rotate(t_stack_node **stack)
 	last_node->next->next = NULL;
 }	
 
-void	ra(t_stack_node **a, bool checker)
+void	ra(t_stack_node **a, bool print)
 {
 	rotate(a);
-	if (!checker)
+	if (print)
 		write(1, "ra\n", 3);
-}}
+}
 
-void	rb(t_stack_node **b, bool checker)
+void	rb(t_stack_node **b, bool print)
 {
 	rotate(b);
-	if (!checker)
+	if (print)
 		write(1, "rb\n", 3);
 }
 
-void	rr(t_stack_node **a, t_stack_node **b, bool checker)
+void	rr(t_stack_node **a, t_stack_node **b, bool print)
 {
 	rotate(a);
 	rotate(b);
-	if (!checker)
+	if (print)
 		write(1, "rr\n", 3);
 }

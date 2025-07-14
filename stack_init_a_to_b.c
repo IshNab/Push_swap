@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 13:03:49 by inabakka          #+#    #+#             */
+/*   Updated: 2025/05/19 20:25:51 by inabakka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 /*
@@ -26,101 +38,117 @@ void	set_current_position(t_stack_node *stack)
 }
 
 /*
- *	Best match is..
- *   | "The Smallest-bigger value" |
- *
- *  if no node is Bigger, best_match is the Smallest node.
- *  TLDR 
- *  With this function every node in b gets its target node in a
-*/
-static void	set_target_node(t_stack_node *a,
-							t_stack_node *b)
+ * Optimized target finding - find target for all nodes in one pass
+ */
+static void	set_target_node(t_stack_node *a, t_stack_node *b)
 {
+	t_stack_node	*current_b;
 	t_stack_node	*current_a;
 	t_stack_node	*target_node;
+	t_stack_node	*smallest_a;
 	long			best_match_index;
 
-	while (b)
+	smallest_a = find_smallest(a); // Cache smallest node
+	current_b = b;
+	
+	while (current_b)
 	{
 		best_match_index = LONG_MAX;
+		target_node = smallest_a; // Default to smallest
 		current_a = a;
+		
+		// Find the smallest number in 'a' that's bigger than current_b->nbr
 		while (current_a)
 		{
-			if (current_a->nbr > b->nbr
-				&& current_a->nbr < best_match_index)
+			if (current_a->nbr > current_b->nbr && current_a->nbr < best_match_index)
 			{
 				best_match_index = current_a->nbr;
 				target_node = current_a;
 			}
 			current_a = current_a->next;
 		}
-		if (LONG_MAX == best_match_index)
-			b->target_node = find_smallest(a);
-		else
-			b->target_node = target_node;
-		b = b->next;
+		
+		current_b->target_node = target_node;
+		current_b = current_b->next;
 	}
 }
 
 /*
- * Set the prices to push the node
- * from b -> a
- * The price checks for the relative positions in the stack
- * for every node, setting the respective price
-*/
+ * Optimized price calculation
+ */
 void	set_price(t_stack_node *a, t_stack_node *b)
 {
 	int	len_a;
 	int	len_b;
+	t_stack_node *current_b;
 
 	len_a = stack_len(a);
 	len_b = stack_len(b);
-	while (b)
+	current_b = b;
+	
+	while (current_b)
 	{
-		b->push_cost = b->current_position;
-		if (!(b->above_median))
-			b->push_cost = len_b - (b->current_position);
-		if (b->target_node->above_median)
-			b->push_cost += b->target_node->current_position;
+		// Cost to move current_b to top of stack b
+		current_b->push_cost = current_b->current_position;
+		if (!(current_b->above_median))
+			current_b->push_cost = len_b - (current_b->current_position);
+		
+		// Add cost to move target to top of stack a
+		if (current_b->target_node->above_median)
+			current_b->push_cost += current_b->target_node->current_position;
 		else
-			b->push_cost += len_a - (b->target_node->current_position);
-		b = b->next;
+			current_b->push_cost += len_a - (current_b->target_node->current_position);
+		
+		current_b = current_b->next;
 	}
 }
 
 /*
- * Flag the cheapest node in the current
- * stacks configurations
-*/
+ * Optimized cheapest finding - single pass
+ */
 void	set_cheapest(t_stack_node *b)
 {
 	long			best_match_value;
 	t_stack_node	*best_match_node;
+	t_stack_node	*current;
 
 	if (NULL == b)
 		return ;
-	best_match_value = LONG_MAX;
-	while (b)
+	
+	// Reset all cheapest flags first
+	current = b;
+	while (current)
 	{
-		if (b->push_cost < best_match_value)
-		{
-			best_match_value = b->push_cost;
-			best_match_node = b;
-		}
-		b = b->next;
+		current->cheapest = false;
+		current = current->next;
 	}
-	best_match_node->cheapest = true;
+	
+	best_match_value = LONG_MAX;
+	best_match_node = NULL;
+	current = b;
+	
+	while (current)
+	{
+		if (current->push_cost < best_match_value)
+		{
+			best_match_value = current->push_cost;
+			best_match_node = current;
+		}
+		current = current->next;
+	}
+	
+	if (best_match_node)
+		best_match_node->cheapest = true;
 }
 
 /*
- * All the necessary values to make the push
- * 		~Relative Positions
- * 		~Target node, the b node to make emerge
- * 		~Price for every configuration
- * 		~Cheapest in the current configuration
-*/
+ * Optimized initialization - calculate all values in optimal order
+ */
 void	init_nodes_a(t_stack_node *a, t_stack_node *b)
 {
+	if (!a || !b)
+		return;
+		
 	set_current_position(a);
 	set_current_position(b);
 	set_target_node(a, b);

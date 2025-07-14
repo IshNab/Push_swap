@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_init.c                                       :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 13:05:08 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 14:02:34 by inabakka         ###   ########.fr       */
+/*   Created: 2025/05/16 13:03:49 by inabakka          #+#    #+#             */
+/*   Updated: 2025/05/19 20:25:51 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,16 +111,16 @@ void	prep_for_push(t_stack_node **stack,
 		if (stack_name == 'a') //If not, and it is stack `a`, execute the following
 		{
 			if (top_node->above_median)
-				ra(stack, false);
+				ra(stack, true);
 			else
-				rra(stack, false);
+				rra(stack, true);
 		}
 		else if (stack_name == 'b') //If not, and it is stack `b`, execute the following
 		{
 			if (top_node->above_median)
-				rb(stack, false);
+				rb(stack, true);
 			else
-				rrb(stack, false);
+				rrb(stack, true);
 		}	
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_operations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inabakkaarey <inabakka@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:28 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 17:11:13 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:33:51 by inabakka           ###   ########.fr     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ static void	push(t_stack_node **dest,t_stack_node **src)
 	}
 }
 
-void	pa(t_stack_node **a, t_stack_node **b, bool checker)
+void	pa(t_stack_node **a, t_stack_node **b, bool print)
 {
 	push(a, b);
-	if (!checker)
+	if (print)
 		write(1, "pa\n", 3);
 }
 
-void	pb(t_stack_node **b, t_stack_node **a, bool checker)
+void	pb(t_stack_node **b, t_stack_node **a, bool print)
 {
 	push(b, a);
-	if (!checker)
+	if (print)
 		write(1, "pb\n", 3);
 }

@@ -1,4 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_operations.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 13:04:28 by inabakka          #+#    #+#             */
+/*   Updated: 2025/06/23 12:33:51 by inabakka           ###   ########.fr     */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
+
+// Optimized chunk-based sorting for large datasets
+static void	sort_large_stack(t_stack_node **a, t_stack_node **b)
+{
+	int	len = stack_len(*a);
+	int	chunk_size;
+	int	chunks;
+	int	i;
+	
+	// Determine optimal chunk size based on stack length
+	if (len <= 100)
+		chunk_size = len / 3;
+	else if (len <= 500)
+		chunk_size = len / 5;
+	else
+		chunk_size = len / 8;
+	
+	chunks = (len + chunk_size - 1) / chunk_size; // Ceiling division
+	
+	// Push elements to b in chunks, largest first
+	for (i = chunks - 1; i >= 0; i--)
+	{
+		int min_val = (len * i) / chunks + 1;
+		int max_val = (len * (i + 1)) / chunks;
+		
+		// Push all elements in current chunk range
+		while (stack_len(*a) > 3)
+		{
+			// Find a node in current chunk range
+			t_stack_node *current = *a;
+			bool found = false;
+			
+			while (current)
+			{
+				if (current->nbr >= min_val && current->nbr <= max_val)
+				{
+					found = true;
+					break;
+				}
+				current = current->next;
+			}
+			
+			if (!found)
+				break;
+			
+			// Move the found element to top and push
+			while ((*a)->nbr < min_val || (*a)->nbr > max_val)
+			{
+				// Simple rotation to find next element in range
+				if ((*a)->next && 
+					(((*a)->next->nbr >= min_val && (*a)->next->nbr <= max_val) ||
+					 ((*a)->prev && (*a)->prev->nbr >= min_val && (*a)->prev->nbr <= max_val)))
+					ra(a, true);
+				else
+					rra(a, true);
+			}
+			pb(b, a, true);
+		}
+	}
+}
 
 static void	rotate_both(t_stack_node **a,
 						t_stack_node **b,
@@ -6,7 +78,7 @@ static void	rotate_both(t_stack_node **a,
 {
 	while (*b != cheapest_node->target_node
 		&& *a != cheapest_node) //As long as the current `b` node is not `a` cheapest node's target node, and the current top `a` node is not the top node
-		rr(a, b, false); //Rotate both `a` and `b` nodes
+		rr(a, b, true); //Rotate both `a` and `b` nodes
 	set_current_position(*a); //Refresh current node positions
 	set_current_position(*b);
 }
@@ -17,7 +89,7 @@ static void	rev_rotate_both(t_stack_node **a,
 {
 	while (*b != cheapest_node->target_node
 		&& *a != cheapest_node) //As long as the current `b` node is not `a` cheapest node's target node && and the current `a` node is not the cheapest
-		rrr(a, b, false); //Reverse rotate both `a` and `b` nodes
+		rrr(a, b, true); //Reverse rotate both `a` and `b` nodes
 	set_current_position(*a); //Refresh current node positions
 	set_current_position(*b);
 }
@@ -42,17 +114,17 @@ static void	move_a_to_b(t_stack_node **a, t_stack_node **b) //Define a function 
 	else // OPTIMIZATION: Handle mixed median cases separately
 	{
 		if (cheapest_node->above_median)
-			ra(a, false);
+			ra(a, true);
 		else
-			rra(a, false);
+			rra(a, true);
 		if (cheapest_node->target_node->above_median)
-			rb(b, false);
+			rb(b, true);
 		else
-			rrb(b, false);
+			rrb(b, true);
 	}
 	prep_for_push(a, cheapest_node, 'a'); //Ensure the cheapest node is at the top, ready for pushing
 	prep_for_push(b, cheapest_node->target_node, 'b'); //Ensure the target node is at the top, ready for pushing
-	pb(b, a, false); //Push from `a` to `b`
+	pb(b, a, true); //Push from `a` to `b`
 }
 
 static void	move_b_to_a(t_stack_node **a, t_stack_node **b) //Define a function that prepares `b`'s target `a` nodes for pushing all `b` nodes back to stack `a` 
@@ -60,7 +132,7 @@ static void	move_b_to_a(t_stack_node **a, t_stack_node **b) //Define a function 
 	if (!b || !*b) // OPTIMIZATION: Added null check
 		return;
 	prep_for_push(a, (*b)->target_node, 'a'); //Ensure `b`'s target `a` node is on top of the stack
-	pa(a, b, false); //Push from `b` to `a`
+	pa(a, b, true); //Push from `b` to `a`
 }
 
 static void	min_on_top(t_stack_node **a) //Define a function that moves the smallest number to the top
@@ -75,42 +147,54 @@ static void	min_on_top(t_stack_node **a) //Define a function that moves the smal
 	while ((*a)->nbr != smallest->nbr) //As long as the smallest number is not at the top
 	{
 		if (smallest->above_median) //Rotate or reverse rotate according to the position of the node on the median
-			ra(a, false);
+			ra(a, true);
 		else
-			rra(a, false);
+			rra(a, true);
 	}
 }
 
-void	sort_stacks(t_stack_node **a, t_stack_node **b) //Define a function that sorts stack `a` if it has more than 3 nodes
+// Optimized sorting function with different strategies based on size
+void	sort_stacks(t_stack_node **a, t_stack_node **b)
 {
-	int	len_a; //To store the length of stack `a`
+	int	len_a;
 
-	if (!a || !b) // OPTIMIZATION: Added null checks
+	if (!a || !b)
 		return;
 	len_a = stack_len(*a);
-	// OPTIMIZATION: Push more elements initially if stack is large
-	if (len_a > 5 && !stack_sorted(*a))
+	
+	// Use different algorithms based on stack size
+	if (len_a <= 50)
 	{
-		pb(b, a, false);
-		pb(b, a, false);
-		pb(b, a, false);
-		len_a -= 3;
+		// Original Turk algorithm for small-medium stacks
+		while (len_a > 3 && !stack_sorted(*a))
+		{
+			if (len_a == 4 || len_a == 5)
+			{
+				pb(b, a, true);
+			}
+			else
+			{
+				init_nodes_a(*a, *b);
+				move_a_to_b(a, b);
+			}
+			len_a = stack_len(*a);
+		}
 	}
-	else if (len_a-- > 3 && !stack_sorted(*a)) //If stack `a` has more than three nodes and aren't sorted
-		pb(b, a, false);
-	if (len_a-- > 3 && !stack_sorted(*a)) //If stack `a` still has more than three nodes and aren't sorted
-		pb(b, a, false);
-	while (len_a-- > 3 && !stack_sorted(*a)) //If stack `a` still has more than three nodes and aren't sorted
+	else
 	{
-		init_nodes_a(*a, *b); //Initiate all nodes from both stacks
-		move_a_to_b(a, b); //Move the cheapest `a` nodes into a sorted stack `b`, until three nodes are left in stack `a`
+		// Optimized chunk-based algorithm for large stacks
+		sort_large_stack(a, b);
 	}
-	sort_three(a); //Sort the remaining three nodes in `a`
-	while (*b) //Until the end of stack `b` is reached
+	
+	sort_three(a);
+	
+	// Push everything back from b to a
+	while (*b)
 	{
-		init_nodes_b(*a, *b); //Initiate all nodes from both stacks
-		move_b_to_a(a, b); //Move all `b` nodes back to a sorted stack `a`
+		init_nodes_b(*a, *b);
+		move_b_to_a(a, b);
 	}
-	set_current_position(*a); //Refresh the current position of stack `a`
-	min_on_top(a); //Ensure smallest number is on top
+	
+	set_current_position(*a);
+	min_on_top(a);
 }
