@@ -134,4 +134,3 @@ int get_max(t_stack *s)
         current = current->next;
     }
     return max;
-}
