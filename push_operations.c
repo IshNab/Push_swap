@@ -3,55 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   push_operations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inabakkaarey <inabakka@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:04:28 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 17:11:13 by inabakka         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:33:51 by inabakka           ###   ########.fr     */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void    pa(t_stack **a, t_stack **b)
+/*
+ * Push a node to the top from src to dest
+ * 🚨 attention If stack empty (i.e. NULL)
+*/
+static void	push(t_stack_node **dest,t_stack_node **src)
 {
-    if (!b || !(*b) || !(*b)->top)
-        return;
+	t_stack_node	*node_to_push;
 
-    t_node *push_node = (*b)->top;
-    (*b)->top = (*b)->top->next;
-    if ((*b)->top)
-        (*b)->top->prev = NULL;
-
-    push_node->next = (*a)->top;
-    if ((*a)->top)
-        (*a)->top->prev = push_node;
-    push_node->prev = NULL;
-    (*a)->top = push_node;
-
-    (*a)->size++;
-    (*b)->size--;
-
-    write(1, "pa\n", 3);
+	if (NULL == *src)
+		return ;
+	node_to_push = *src;
+	*src = (*src)->next;
+	if (*src)
+		(*src)->prev = NULL;
+	node_to_push->prev = NULL;
+	if (NULL == *dest)
+	{
+		*dest = node_to_push;
+		node_to_push->next = NULL;
+	}
+	else
+	{
+		node_to_push->next = *dest;
+		node_to_push->next->prev = node_to_push;
+		*dest = node_to_push;
+	}
 }
 
-void    pb(t_stack **a, t_stack **b)
+void	pa(t_stack_node **a, t_stack_node **b, bool print)
 {
-    if (!a || !(*a) || !(*a)->top)
-        return;
+	push(a, b);
+	if (print)
+		write(1, "pa\n", 3);
+}
 
-    t_node *push_node = (*a)->top;
-    (*a)->top = (*a)->top->next;
-    if ((*a)->top)
-        (*a)->top->prev = NULL;
-
-    push_node->next = (*b)->top;
-    if ((*b)->top)
-        (*b)->top->prev = push_node;
-    push_node->prev = NULL;
-    (*b)->top = push_node;
-
-    (*b)->size++;
-    (*a)->size--;
-
-    write(1, "pb\n", 3);
+void	pb(t_stack_node **b, t_stack_node **a, bool print)
+{
+	push(b, a);
+	if (print)
+		write(1, "pb\n", 3);
 }

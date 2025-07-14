@@ -1,75 +1,73 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   small_sort.c                                       :+:      :+:    :+:   */
+/*   push_operations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 13:05:02 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 16:21:23 by inabakka         ###   ########.fr       */
+/*   Created: 2025/05/16 13:04:28 by inabakka          #+#    #+#             */
+/*   Updated: 2025/06/23 12:33:51 by inabakka           ###   ########.fr     */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// Sort stack with 3 elements
-void sort_three(t_stack **a)
+void	sort_three(t_stack_node **a)
 {
-    int first = (*a)->top->value;
-    int second = (*a)->top->next->value;
-    int third = (*a)->top->next->next->value;
-
-    if (first > second && second < third && first < third)
-        sa(a, true);
-    else if (first > second && second > third)
-    {
-        sa(a, true);
-        rra(a, true);
-    }
-    else if (first > second && second < third && first > third)
-        ra(a, true);
-    else if (first < second && second > third && first < third)
-    {
-        sa(a, true);
-        ra(a, true);
-    }
-    else if (first < second && second > third && first > third)
-        rra(a, true);
+	int	first, second, third;
+	
+	if (!a || !*a || !(*a)->next || !(*a)->next->next)
+		return;
+	
+	first = (*a)->nbr;
+	second = (*a)->next->nbr;
+	third = (*a)->next->next->nbr;
+	
+	// All 6 possible cases for 3 elements
+	if (first < second && second < third) // 1 2 3 - already sorted
+		return;
+	else if (first < second && second > third && first < third) // 1 3 2
+		{
+			rra(a, true);
+			sa(a, true);
+		}
+	else if (first > second && second < third && first < third) // 2 1 3
+		sa(a, true);
+	else if (first < second && second > third && first > third) // 3 1 2
+		rra(a, true);
+	else if (first > second && second > third) // 3 2 1
+		{
+			ra(a, true);
+			sa(a, true);
+		}
+	else if (first > second && second < third && first > third) // 2 3 1
+		ra(a, true);
 }
 
-void sort_five(t_stack **a, t_stack **b)
-{
-    int pushed = 0;
-    int rotations = 0;
-    int stack_size = stack_len(*a);
+// Old version - had issues with logic
+// void sort_three(t_stack_node **a)
+// {
+//     if (!a || !*a || !(*a)->next || !(*a)->next->next)
+//         return;
 
-    if (stack_size != 5)
-        return; // Only works for exactly 5 elements
+//     int first = (*a)->nbr;               // First node's value
+//     int second = (*a)->next->nbr;        // Second node's value
+//     int third = (*a)->next->next->nbr;   // Third node's value
 
-    // Push 2 smallest elements to stack B
-    while (pushed < 2)
-    {
-        int min = get_min(*a);
-        if ((*a)->top->value == min)
-        {
-            pb(a, b);
-            pushed++;
-            rotations = 0; // Reset rotation counter after successful push
-        }
-        else
-        {
-            ra(a, true);
-            rotations++;
-            // Prevent infinite loop: if rotated full cycle without finding min
-            if (rotations >= stack_size)
-                break;
-        }
-    }
-
-    // Sort remaining 3 elements in stack A
-    sort_three(a);
-
-    // Push back elements from stack B
-    while (*b && (*b)->size > 0)
-        pa(a, b);
-}
+//     if (first > second && second < third && first < third)
+//         sa(a, true);
+//     else if (first > second && second > third)
+//     {
+//         sa(a, true);
+//         rra(a, true);
+//     }
+//     else if (first > second && second < third && first > third)
+//         ra(a, true);
+//     else if (first < second && second > third && first < third)
+//     {
+//         sa(a, true);
+//         ra(a, true);
+//     }
+//     else if (first < second && second > third && first > third)
+//         rra(a, true);
+// }

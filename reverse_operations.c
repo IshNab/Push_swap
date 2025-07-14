@@ -13,42 +13,42 @@
 #include "push_swap.h"
 
 /*
- * Top node to bottom position
+ * Bottom to top
 */
-static void	rotate(t_stack_node **stack)
+static void	reverse_rotate(t_stack_node **stack)
 {
-	t_stack_node	*last_node;
+	t_stack_node	*last;
 	int				len;
 
 	len = stack_len(*stack);
-	if (NULL == stack || NULL == *stack || 1 == len)
+	if (NULL == *stack || NULL == stack || 1 == len)
 		return ;
-	last_node = find_last_node(*stack);
-	last_node->next = *stack;
-	*stack = (*stack)->next;
-	(*stack)->prev = NULL;
-	last_node->next->prev = last_node;
-	last_node->next->next = NULL;
-}	
-
-void	ra(t_stack_node **a, bool print)
-{
-	rotate(a);
-	if (print)
-		write(1, "ra\n", 3);
+	last = find_last_node(*stack);
+	last->prev->next = NULL;
+	last->next = *stack;
+	last->prev = NULL;
+	*stack = last;
+	last->next->prev = last;
 }
 
-void	rb(t_stack_node **b, bool print)
+void	rra(t_stack_node **a, bool print)
 {
-	rotate(b);
+	reverse_rotate(a);
 	if (print)
-		write(1, "rb\n", 3);
+		write(1, "rra\n", 4);
 }
 
-void	rr(t_stack_node **a, t_stack_node **b, bool print)
+void	rrb(t_stack_node **b, bool print)
 {
-	rotate(a);
-	rotate(b);
+	reverse_rotate(b);
 	if (print)
-		write(1, "rr\n", 3);
+		write(1, "rrb\n", 4);
+}
+
+void	rrr(t_stack_node **a, t_stack_node **b, bool print)
+{
+	reverse_rotate(a);
+	reverse_rotate(b);
+	if (print)
+		write(1, "rrr\n", 4);
 }

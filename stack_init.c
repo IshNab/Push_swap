@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_init.c                                       :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inabakka <inabakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 13:05:08 by inabakka          #+#    #+#             */
-/*   Updated: 2025/05/23 14:02:34 by inabakka         ###   ########.fr       */
+/*   Created: 2025/05/16 13:03:49 by inabakka          #+#    #+#             */
+/*   Updated: 2025/05/19 20:25:51 by inabakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void free_stack(t_stack **stack)
+void free_stack(t_stack_node **stack)
 {
     if (!stack || !*stack)
         return;
     
-    t_node *current = (*stack)->top;
-    t_node *tmp;
+    t_stack_node *current = *stack;  // Start from the head node
+    t_stack_node *tmp;
     
     while (current)
     {
@@ -27,8 +27,7 @@ void free_stack(t_stack **stack)
         current = tmp;
     }
     
-    free(*stack);
-    *stack = NULL;
+    *stack = NULL;  // Set the stack pointer to NULL
 }
 
 void	free_split(char **split)
@@ -44,49 +43,34 @@ void	free_split(char **split)
 	free(split);
 }
 
-void append_node(t_stack **stack, int n)
+void append_node(t_stack_node **stack, int n)
 {
     if (!stack)
         return;
     
-    t_node *node = malloc(sizeof(t_node));
+    t_stack_node *node = malloc(sizeof(t_stack_node));  // Allocate node, not stack
     if (!node)
-        return; // or handle error
+        return;
     
-    node->value = n;
+    node->nbr = n;       // Use 'nbr' instead of 'value'
     node->next = NULL;
     node->prev = NULL;
     
     if (!*stack)
     {
-        *stack = malloc(sizeof(t_stack));
-        if (!*stack)
-        {
-            free(node);
-            return; // or handle error
-        }
-        (*stack)->top = node;
-        (*stack)->size = 1;
+        *stack = node;   // Just assign the node if stack is empty
         return;
     }
     
-    if (!(*stack)->top)
-    {
-        (*stack)->top = node;
-        (*stack)->size = 1;
-        return;
-    }
-    
-    t_node *last = (*stack)->top;
-    while (last->next)
+    t_stack_node *last = *stack;  // Start from the head
+    while (last->next)            // Traverse to the end
         last = last->next;
     
-    last->next = node;
+    last->next = node;   // Link new node
     node->prev = last;
-    (*stack)->size++;
 }
 
-int	stack_init(t_stack **a, char **argv, bool is_split)
+int	stack_init_a(t_stack_node **a, char **argv, bool is_split)
 {
 	long	n;
 	int		i;
@@ -103,4 +87,40 @@ int	stack_init(t_stack **a, char **argv, bool is_split)
 	if (check_duplicates(*a))
 		error_exit(a, NULL, argv, is_split);
 	return (1);
+}
+
+t_stack_node	*return_cheapest(t_stack_node *stack)
+{
+	if (stack == NULL)
+		return (NULL);
+	while (stack)
+	{
+		if (stack->cheapest)
+			return (stack);
+		stack = stack->next;
+	}
+	return (NULL);
+}
+
+void	prep_for_push(t_stack_node **stack,
+						t_stack_node *top_node,
+						char stack_name) //Define a function that moves the required node to the top of the stack
+{
+	while (*stack != top_node) //Check if the required node is not already the first node
+	{
+		if (stack_name == 'a') //If not, and it is stack `a`, execute the following
+		{
+			if (top_node->above_median)
+				ra(stack, true);
+			else
+				rra(stack, true);
+		}
+		else if (stack_name == 'b') //If not, and it is stack `b`, execute the following
+		{
+			if (top_node->above_median)
+				rb(stack, true);
+			else
+				rrb(stack, true);
+		}	
+	}
 }
